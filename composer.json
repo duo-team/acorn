@@ -1,0 +1,27 @@
+{
+    "name": "duo-team/acorn",
+    "description": "DuoTeam Acorn support package",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kacper Pruszyński",
+            "email": "kacper.pruszynski99@gmail.com"
+        }
+    ],
+    "require": {
+        "roots/acorn": "^1.1"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "DuoTeam\\Acorn\\": "src/"
+        }
+    }
+}
