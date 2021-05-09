@@ -13,8 +13,10 @@ class Bootloader extends Kernel
      */
     protected function bootstrap(): array
     {
-        return array_merge([
-            \DuoTeam\Acorn\Bootstrap\ApplyFilters::class
-        ], parent::bootstrap());
+        return apply_filters('acorn/bootstrap', function () {
+            return array_merge([
+                \DuoTeam\Acorn\Bootstrap\ApplyFilters::class
+            ], parent::bootstrap());
+        });
     }
 }
