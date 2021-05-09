@@ -1,6 +1,6 @@
 <?php
 
-namespace DuoTeam\Acorn\Filters;
+namespace DuoTeam\Acorn\Support;
 
 use ReflectionFunction;
 use ReflectionMethod;

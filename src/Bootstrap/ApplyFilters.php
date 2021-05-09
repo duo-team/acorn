@@ -2,7 +2,7 @@
 
 namespace DuoTeam\Acorn\Bootstrap;
 
-use DuoTeam\Acorn\Filters\Filter;
+use DuoTeam\Acorn\Support\Filter;
 use Illuminate\Contracts\Foundation\Application;
 use InvalidArgumentException;
 
