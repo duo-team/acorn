@@ -26,7 +26,7 @@ class ApplyFilters
     public function bootstrap(Application $app): void
     {
         $this->makeFilters(
-            $app->get('config')->get('filters', [])
+            $app->config->get('filters', [])
         );
 
         foreach ($this->filters as $filter) {
