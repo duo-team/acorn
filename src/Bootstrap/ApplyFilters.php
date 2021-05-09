@@ -3,17 +3,19 @@
 namespace DuoTeam\Acorn\Bootstrap;
 
 use DuoTeam\Acorn\Support\Filter;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Foundation\Application;
 use InvalidArgumentException;
+use ReflectionException;
 
 class ApplyFilters
 {
     /**
-     * Ready to use filters.
+     * Application instance.
      *
-     * @var Filter[]
+     * @var Application
      */
-    protected $filters = [];
+    protected $app;
 
     /**
      * Bootstrap the given application.
@@ -21,15 +23,17 @@ class ApplyFilters
      * @param Application $app
      *
      * @return void
-     * @throws \ReflectionException
+     * @throws ReflectionException
+     * @throws BindingResolutionException
      */
     public function bootstrap(Application $app): void
     {
-        $this->makeFilters(
-            $app->config->get('filters', [])
+        $this->app = $app;
+        $filters = $this->makeFilters(
+            $this->app->config->get('filters', [])
         );
 
-        foreach ($this->filters as $filter) {
+        foreach ($filters as $filter) {
             $filter->apply();
         }
     }
@@ -39,12 +43,13 @@ class ApplyFilters
      *
      * @param array $filters
      *
-     * @return void
+     * @return Filter[]
+     * @throws BindingResolutionException
      */
-    protected function makeFilters(array $filters): void
+    protected function makeFilters(array $filters): array
     {
-        $this->filters = array_map(static function (string $className) {
-            $filter = app()->make($className);
+        return array_map(function (string $className) {
+            $filter = $this->app->make($className);
 
             if (! is_a($filter, Filter::class)) {
                 throw new InvalidArgumentException(
