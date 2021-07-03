@@ -58,7 +58,7 @@ abstract class Filter
      * @return int
      * @throws \ReflectionException
      */
-    public function calculateAcceptedArgs(): int
+    protected function calculateAcceptedArgs(): int
     {
         // get handle callback
         $handle = $this->getHandle();
