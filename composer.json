@@ -22,6 +22,7 @@
     "autoload": {
         "psr-4": {
             "DuoTeam\\Acorn\\": "src/"
-        }
+        },
+        "files": ["src/Support/helpers.php"]
     }
 }
