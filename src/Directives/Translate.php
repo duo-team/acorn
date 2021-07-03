@@ -7,6 +7,18 @@ use Illuminate\Support\Str;
 class Translate
 {
     /**
+     * Translate text with valid text domain.
+     *
+     * @param string $text
+     *
+     * @return string
+     */
+    public static function text(string $text): string
+    {
+        return __($text, get_theme_text_domain());
+    }
+
+    /**
      * Invoke the @translate directive.
      *
      * @param string $expression
