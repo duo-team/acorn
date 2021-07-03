@@ -2,6 +2,8 @@
 
 namespace DuoTeam\Acorn;
 
+use DuoTeam\Acorn\Bootstrap\ApplyFilters;
+use DuoTeam\Acorn\Bootstrap\CaptureRequest;
 use Roots\Acorn\Bootloader as Kernel;
 
 class Bootloader extends Kernel
@@ -14,7 +16,8 @@ class Bootloader extends Kernel
     protected function bootstrap(): array
     {
         return apply_filters('acorn/bootstrap', array_merge(parent::bootstrap(), [
-            \DuoTeam\Acorn\Bootstrap\ApplyFilters::class,
+            ApplyFilters::class,
+            CaptureRequest::class,
         ]));
     }
 }
