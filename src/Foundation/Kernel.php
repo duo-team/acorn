@@ -15,9 +15,10 @@ class Kernel extends RootsKernel
      */
     protected function bootstrap(): array
     {
-        return apply_filters('acorn/bootstrap', array_merge(parent::bootstrap(), [
-            ApplyFilters::class,
+        return apply_filters('acorn/bootstrap', array_merge([
             CaptureRequest::class,
+        ], parent::bootstrap(), [
+            ApplyFilters::class,
         ]));
     }
 }
