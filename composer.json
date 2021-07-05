@@ -24,5 +24,12 @@
             "DuoTeam\\Acorn\\": "src/"
         },
         "files": ["src/Support/helpers.php"]
+    },
+    "extra": {
+        "acorn": {
+            "providers": [
+                "DuoTeam\\Acorn\\Providers\\DuoTeamServiceProvider"
+            ]
+        }
     }
 }

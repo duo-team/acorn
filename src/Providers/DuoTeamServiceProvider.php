@@ -3,19 +3,11 @@
 namespace DuoTeam\Acorn\Providers;
 
 use Roots\Acorn\ServiceProvider;
+use function Roots\config_path;
+use function Roots\resource_path;
 
 class DuoTeamServiceProvider extends ServiceProvider
 {
-    /**
-     * Config to pubslish.
-     *
-     * @var string[]
-     */
-    protected $config = [
-        'acf',
-        'filters'
-    ];
-
     /**
      * Bootstrap any package services.
      *
@@ -23,14 +15,44 @@ class DuoTeamServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        dd($this->packagePath());
-
-        $this->publishes([
-            __DIR__.'/../config/courier.php' => config_path('courier.php'),
-        ]);
+        $this->publish();
+        $this->mergeConfigs();
     }
 
-    private function packagePath(): string
+    /**
+     * Publish resources to application.
+     *
+     * @return void
+     */
+    protected function publish(): void
+    {
+        $this->publishes([
+            sprintf('%s/config/acf.php', $this->packagePath()) => config_path('acf.php'),
+            sprintf('%s/config/filters.php', $this->packagePath()) => config_path('filters.php'),
+        ], 'config');
+
+        $this->publishes([
+            sprintf('%s/resources/acf', $this->packagePath()) => resource_path('acf'),
+        ], 'resource');
+    }
+
+    /**
+     * Merge config from package to application.
+     *
+     * @return void
+     */
+    protected function mergeConfigs(): void
+    {
+        $this->mergeConfigFrom(sprintf('%s/config/acf.php', $this->packagePath()), 'acf');
+        $this->mergeConfigFrom(sprintf('%s/config/filters.php', $this->packagePath()), 'filters');
+    }
+
+    /**
+     * Get package path.
+     *
+     * @return string
+     */
+    protected function packagePath(): string
     {
         return realpath(sprintf('%s/../../', __DIR__));
     }
