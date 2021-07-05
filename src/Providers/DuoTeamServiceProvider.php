@@ -29,11 +29,11 @@ class DuoTeamServiceProvider extends ServiceProvider
         $this->publishes([
             sprintf('%s/config/acf.php', $this->packagePath()) => config_path('acf.php'),
             sprintf('%s/config/filters.php', $this->packagePath()) => config_path('filters.php'),
-        ], 'config');
+        ], 'duo-team-config');
 
         $this->publishes([
             sprintf('%s/resources/acf', $this->packagePath()) => resource_path('acf'),
-        ], 'resource');
+        ], 'duo-team-resources');
     }
 
     /**
