@@ -1,12 +1,12 @@
 <?php
 
-namespace DuoTeam\Acorn;
+namespace DuoTeam\Acorn\Foundation;
 
 use DuoTeam\Acorn\Bootstrap\ApplyFilters;
 use DuoTeam\Acorn\Bootstrap\CaptureRequest;
-use Roots\Acorn\Bootloader as Kernel;
+use Roots\Acorn\Bootloader as RootsKernel;
 
-class Bootloader extends Kernel
+class Kernel extends RootsKernel
 {
     /**
      * Get the list of application bootstraps
