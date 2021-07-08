@@ -2,6 +2,7 @@
 
 namespace DuoTeam\Acorn\Routing\Ajax;
 
+use DuoTeam\Acorn\Routing\RoutesCollection;
 use Illuminate\Http\Request;
 
 class Router
@@ -9,22 +10,31 @@ class Router
     /**
      * Routes to load in application.
      *
-     * @var array
+     * @var RoutesCollection
      */
-    protected $routes = [];
+    protected $routes;
+
+    /**
+     * @param RoutesCollection $routes
+     */
+    public function __construct(RoutesCollection $routes)
+    {
+        $this->routes = $routes;
+    }
 
     /**
      * Add GET ajax route.
      *
      * @param string $action
      * @param callable $handler
+     * @param bool $isPublic
      *
      * @return Route
      */
-    public function get(string $action, callable $handler): Route
+    public function get(string $action, callable $handler, bool $isPublic = true): Route
     {
-        $route = new Route([Request::METHOD_GET, Request::METHOD_HEAD], $action, $handler);
-        $this->routes[] = $route;
+        $route = new Route([Request::METHOD_GET, Request::METHOD_HEAD], $action, $handler, $isPublic);
+        $this->routes->add($route);
 
         return $route;
     }
@@ -36,6 +46,6 @@ class Router
      */
     public function routes(): array
     {
-        return $this->routes;
+        return $this->routes->all();
     }
 }

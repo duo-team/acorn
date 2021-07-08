@@ -29,7 +29,7 @@
         "acorn": {
             "providers": [
                 "DuoTeam\\Acorn\\Providers\\DuoTeamServiceProvider",
-                "DuoTeam\\Acorn\\Routing\\Providers\\AjaxRoutingServiceProvider"
+                "DuoTeam\\Acorn\\Routing\\Ajax\\Providers\\RoutingServiceProvider"
             ]
         }
     }
