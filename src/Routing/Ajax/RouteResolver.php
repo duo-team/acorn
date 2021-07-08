@@ -58,6 +58,7 @@ class RouteResolver implements RouteResolverInterface
     public function resolveRoutes(): void
     {
         foreach ($this->router->routes() as $route) {
+            dump($this->actionsResolver->resolve($route));
             add_filters($this->actionsResolver->resolve($route), function () use ($route) {
                 $this->matchVerifier->verifyRoute($route);
 
