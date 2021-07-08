@@ -31,7 +31,7 @@ class RouteMatchVerifier
     public function verifyRoute(Route $route): void
     {
         foreach ($this->rules->all() as $rule) {
-            // rule here
+            $rule->verify($route);
         }
     }
 }
