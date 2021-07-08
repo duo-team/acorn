@@ -61,7 +61,7 @@ class RouteResolver implements RouteResolverInterface
             add_filters($this->actionsResolver->resolve($route), function () use ($route) {
                 $this->matchVerifier->verifyRoute($route);
 
-                dd($route);
+                dd($route );
             });
         }
     }

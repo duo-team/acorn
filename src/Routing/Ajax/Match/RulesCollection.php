@@ -2,6 +2,7 @@
 
 namespace DuoTeam\Acorn\Routing\Ajax\Match;
 
+use DuoTeam\Acorn\Routing\Ajax\Interfaces\MatchRuleInterface;
 use Roots\Acorn\Application;
 
 class RulesCollection
@@ -26,11 +27,11 @@ class RulesCollection
     /**
      * Add rule to collection.
      *
-     * @param $rule
+     * @param MatchRuleInterface $rule
      *
      * @return $this
      */
-    public function add($rule): self
+    public function add(MatchRuleInterface $rule): self
     {
         $this->items[] = $rule;
 
@@ -40,7 +41,7 @@ class RulesCollection
     /**
      * Get all rules.
      *
-     * @return array
+     * @return MatchRuleInterface[]
      */
     public function all(): array
     {
