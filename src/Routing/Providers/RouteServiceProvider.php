@@ -2,6 +2,7 @@
 
 namespace DuoTeam\Acorn\Routing\Providers;
 
+use DuoTeam\Acorn\Routing\Ajax\RouteResolver as AjaxRouteResolver;
 use DuoTeam\Acorn\Routing\Interfaces\RouteResolverInterface;
 use DuoTeam\Acorn\Routing\Interfaces\RoutingInterface;
 use Roots\Acorn\ServiceProvider;
@@ -20,7 +21,9 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var array
      */
-    protected $resolvers = [];
+    protected $resolvers = [
+        AjaxRouteResolver::class
+    ];
 
     /**
      * Register any application services.
