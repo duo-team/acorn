@@ -23,8 +23,5 @@ class RoutingServiceProvider extends ServiceProvider
     protected function registerMatchVerifierRules(): void
     {
         $this->app->singleton(RulesCollection::class);
-
-        $this->app->get(RulesCollection::class)
-            ->add();
     }
 }
