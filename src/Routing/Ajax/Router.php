@@ -31,9 +31,25 @@ class Router
      *
      * @return Route
      */
-    public function get(string $action, callable $handler, bool $isPublic = true): Route
+    public function get(string $action, callable $handler): Route
     {
-        $route = new Route([Request::METHOD_GET, Request::METHOD_HEAD], $action, $handler, $isPublic);
+        $route = new Route([Request::METHOD_GET, Request::METHOD_HEAD], $action, $handler);
+        $this->routes->add($route);
+
+        return $route;
+    }
+
+    /**
+     * Add POST Ajax route.
+     *
+     * @param string $action
+     * @param callable $handler
+     *
+     * @return Route
+     */
+    public function post(string $action, callable $handler): Route
+    {
+        $route = new Route([Request::METHOD_POST], $action, $handler);
         $this->routes->add($route);
 
         return $route;
