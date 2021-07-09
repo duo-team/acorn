@@ -39,11 +39,12 @@ class Handler extends ExceptionHandler
      */
     protected function renderJsonException(Request $request, Throwable $e): void
     {
-        $content = [];
+        $debuggableContent = $this->debuggableJsonContent($e);
+        $content = array_merge(['message' => $e->getMessage()], $debuggableContent);
         $status = Response::HTTP_INTERNAL_SERVER_ERROR;
 
         if ($e instanceof HttpExceptionInterface) {
-            $content = array_merge(['message' => $e->getMessage()], $this->debuggableJsonContent($e));
+            $content = array_merge(['message' => $e->getMessage()], $debuggableContent);
             $status = $e->getStatusCode();
         }
 
