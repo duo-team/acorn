@@ -5,6 +5,7 @@ namespace DuoTeam\Acorn\Routing\Ajax\Match\Rules;
 use DuoTeam\Acorn\Routing\Ajax\Interfaces\MatchRuleInterface;
 use DuoTeam\Acorn\Routing\Ajax\Route;
 use DuoTeam\Acorn\Routing\Ajax\Router;
+use DuoTeam\Acorn\Routing\Exceptions\MethodNotAllowedException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
@@ -49,7 +50,7 @@ class HttpMethodMatchRule implements MatchRuleInterface
         $allowedHttpMethods = $this->findAllAllowedHttpMethodsForRoute($route);
 
         if (!in_array($incomingRequestMethod, $allowedHttpMethods, true)) {
-            throw new HttpException(Response::HTTP_METHOD_NOT_ALLOWED);
+            throw MethodNotAllowedException::byMethod($incomingRequestMethod, $allowedHttpMethods);
         }
     }
 
@@ -67,7 +68,7 @@ class HttpMethodMatchRule implements MatchRuleInterface
                 return $concurrentRoute->getAction() === $route->getAction();
             })
             ->map(function (Route $route) {
-                return array_map([Str::class, 'lower'], $route->getMethods());
+                return array_map([Str::class, 'upper'], $route->getMethods());
             })
             ->flatten()
             ->filter()
