@@ -26,12 +26,11 @@ class Router
      * Add GET ajax route.
      *
      * @param string $action
-     * @param callable $handler
-     * @param bool $isPublic
+     * @param callable|string $handler
      *
      * @return Route
      */
-    public function get(string $action, callable $handler): Route
+    public function get(string $action, $handler): Route
     {
         $route = new Route([Request::METHOD_GET, Request::METHOD_HEAD], $action, $handler);
         $this->routes->add($route);
@@ -43,13 +42,45 @@ class Router
      * Add POST Ajax route.
      *
      * @param string $action
-     * @param callable $handler
+     * @param callable|string $handler
      *
      * @return Route
      */
-    public function post(string $action, callable $handler): Route
+    public function post(string $action, $handler): Route
     {
         $route = new Route([Request::METHOD_POST], $action, $handler);
+        $this->routes->add($route);
+
+        return $route;
+    }
+
+    /**
+     * Add POST Ajax route.
+     *
+     * @param string $action
+     * @param callable|string $handler
+     *
+     * @return Route
+     */
+    public function put(string $action, $handler): Route
+    {
+        $route = new Route([Request::METHOD_PUT], $action, $handler);
+        $this->routes->add($route);
+
+        return $route;
+    }
+
+    /**
+     * Add POST Ajax route.
+     *
+     * @param string $action
+     * @param callable|string $handler
+     *
+     * @return Route
+     */
+    public function delete(string $action, $handler): Route
+    {
+        $route = new Route([Request::METHOD_DELETE], $action, $handler);
         $this->routes->add($route);
 
         return $route;
