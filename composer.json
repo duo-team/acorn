@@ -10,6 +10,7 @@
         }
     ],
     "require": {
+        "league/fractal": "^0.19.2",
         "roots/acorn": "^1.1"
     },
     "config": {
