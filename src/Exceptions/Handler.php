@@ -58,6 +58,7 @@ class Handler extends ExceptionHandler
         }
 
         return [
+            'exception' => get_class($exception),
             'file' => $exception->getFile(),
             'line' => $exception->getLine(),
             'trace' => $exception->getTrace()
