@@ -31,17 +31,17 @@ class Route implements RouteInterface, AjaxRouteInterface
     /**
      * Route handler.
      *
-     * @var callable
+     * @var callable|string
      */
     protected $handler;
 
     /**
      * @param array $methods
      * @param string $action
-     * @param callable $handler
+     * @param callable|string $handler
      * @param bool $isPublic
      */
-    public function __construct(array $methods, string $action, callable $handler, bool $isPublic = true)
+    public function __construct(array $methods, string $action, $handler, bool $isPublic = true)
     {
         $this->methods = $methods;
         $this->action = $action;
@@ -62,9 +62,9 @@ class Route implements RouteInterface, AjaxRouteInterface
     /**
      * Get route handler.
      *
-     * @return callable
+     * @return callable|string
      */
-    public function getHandler(): callable
+    public function getHandler()
     {
         return $this->handler;
     }

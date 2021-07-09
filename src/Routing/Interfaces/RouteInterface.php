@@ -7,9 +7,9 @@ interface RouteInterface
     /**
      * Get route handler.
      *
-     * @return callable
+     * @return callable|string
      */
-    public function getHandler(): callable;
+    public function getHandler();
 
     /**
      * Get allowed methods.
