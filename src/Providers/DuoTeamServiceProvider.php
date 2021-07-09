@@ -19,7 +19,6 @@ class DuoTeamServiceProvider extends ServiceProvider
     {
         $this->publish();
         $this->mergeConfigs();
-        $this->registerExceptionHandler();
     }
 
     /**
@@ -58,15 +57,5 @@ class DuoTeamServiceProvider extends ServiceProvider
     protected function packagePath(): string
     {
         return realpath(sprintf('%s/../../', __DIR__));
-    }
-
-    /**
-     * Register exception handler in our application.
-     *
-     * @return void
-     */
-    protected function registerExceptionHandler(): void
-    {
-        $this->app->singleton(ExceptionHandler::class, Handler::class);
     }
 }

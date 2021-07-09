@@ -3,6 +3,7 @@
 namespace DuoTeam\Acorn\Foundation;
 
 use DuoTeam\Acorn\Bootstrap\ApplyFilters;
+use DuoTeam\Acorn\Bootstrap\HandleExceptions;
 use DuoTeam\Acorn\Bootstrap\CaptureRequest;
 use Roots\Acorn\Bootloader as RootsKernel;
 
@@ -19,6 +20,7 @@ class Kernel extends RootsKernel
             CaptureRequest::class,
         ], parent::bootstrap(), [
             ApplyFilters::class,
+            HandleExceptions::class
         ]));
     }
 }
