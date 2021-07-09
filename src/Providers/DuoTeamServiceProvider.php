@@ -2,8 +2,8 @@
 
 namespace DuoTeam\Acorn\Providers;
 
-use DuoTeam\Acorn\Exceptions\Handler;
-use Illuminate\Contracts\Debug\ExceptionHandler;
+use DuoTeam\Acorn\Http\Controller;
+use DuoTeam\Acorn\Resources\Managers\ResourceTransformerManager;
 use Roots\Acorn\ServiceProvider;
 use function Roots\config_path;
 use function Roots\resource_path;
@@ -19,6 +19,7 @@ class DuoTeamServiceProvider extends ServiceProvider
     {
         $this->publish();
         $this->mergeConfigs();
+        $this->setControllerDependencies();
     }
 
     /**
@@ -57,5 +58,18 @@ class DuoTeamServiceProvider extends ServiceProvider
     protected function packagePath(): string
     {
         return realpath(sprintf('%s/../../', __DIR__));
+    }
+
+    /**
+     * Set controller dependencies.
+     *
+     * @return void
+     */
+    protected function setControllerDependencies(): void
+    {
+        $this->app->afterResolving(Controller::class, function (Controller $controller, $app) {
+            $resourceTransformerManager = $app->make(ResourceTransformerManager::class);
+            $controller->setResourceTransformerManager($resourceTransformerManager);
+        });
     }
 }
