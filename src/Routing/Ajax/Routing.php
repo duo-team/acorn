@@ -20,4 +20,17 @@ abstract class Routing implements RoutingInterface
     {
         $this->router = $router;
     }
+
+    /**
+     * Make at handler signature.
+     *
+     * @param string $class
+     * @param string $method
+     *
+     * @return string
+     */
+    public function atHandler(string $class, string $method): string
+    {
+        return sprintf('%s@%s', $class, $method);
+    }
 }
