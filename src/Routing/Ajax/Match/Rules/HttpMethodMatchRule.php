@@ -46,7 +46,7 @@ class HttpMethodMatchRule implements MatchRuleInterface
      */
     public function verify(Route $route): void
     {
-        $incomingRequestMethod = Str::lower($this->request->method());
+        $incomingRequestMethod = Str::upper($this->request->method());
         $allowedHttpMethods = $this->findAllAllowedHttpMethodsForRoute($route);
 
         if (!in_array($incomingRequestMethod, $allowedHttpMethods, true)) {
