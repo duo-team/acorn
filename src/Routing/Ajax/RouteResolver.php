@@ -6,6 +6,7 @@ use DuoTeam\Acorn\Routing\Ajax\Match\RouteMatchVerifier;
 use DuoTeam\Acorn\Routing\Ajax\Support\AjaxActionsResolver;
 use DuoTeam\Acorn\Routing\Interfaces\RouteResolverInterface;
 use Illuminate\Http\Request;
+use Roots\Acorn\Application;
 use function Roots\add_filters as add_filters;
 
 class RouteResolver implements RouteResolverInterface
@@ -39,15 +40,28 @@ class RouteResolver implements RouteResolverInterface
     protected $matchVerifier;
 
     /**
+     * Application instance.
+     *
+     * @var Application
+     */
+    private $application;
+
+    /**
      * @param Router $router
      * @param AjaxActionsResolver $actionsResolver
      * @param RouteMatchVerifier $matchVerifier
      */
-    public function __construct(Router $router, AjaxActionsResolver $actionsResolver, RouteMatchVerifier $matchVerifier)
+    public function __construct(
+        Router $router,
+        AjaxActionsResolver $actionsResolver,
+        RouteMatchVerifier $matchVerifier,
+        Application $application
+    )
     {
         $this->router = $router;
         $this->actionsResolver = $actionsResolver;
         $this->matchVerifier = $matchVerifier;
+        $this->application = $application;
     }
 
     /**
@@ -60,8 +74,7 @@ class RouteResolver implements RouteResolverInterface
         foreach ($this->router->routes() as $route) {
             add_filters($this->actionsResolver->resolve($route), function () use ($route) {
                 $this->matchVerifier->verifyRoute($route);
-
-                dd($route );
+                $this->application->call($route->getHandler());
             });
         }
     }
