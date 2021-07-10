@@ -10,6 +10,7 @@
         }
     ],
     "require": {
+        "illuminate/database": "^7.0",
         "league/fractal": "^0.19.2",
         "roots/acorn": "^1.1"
     },
