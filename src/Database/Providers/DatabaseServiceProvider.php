@@ -2,11 +2,6 @@
 
 namespace DuoTeam\Acorn\Database\Providers;
 
-use DuoTeam\Acorn\Database\Connection;
-use DuoTeam\Acorn\Database\ConnectionResolver;
-use DuoTeam\Acorn\Database\Interfaces\ConnectionInterface;
-use DuoTeam\Acorn\Database\Model;
-use DuoTeam\Acorn\Database\WordPressDatabase;
 use Roots\Acorn\ServiceProvider;
 use wpdb as WpDB;
 
@@ -31,6 +26,5 @@ class DatabaseServiceProvider extends ServiceProvider
         global $wpdb;
 
         $this->app->instance(WpDB::class, $wpdb);
-        $this->app->bind(ConnectionInterface::class, Connection::class);
     }
 }

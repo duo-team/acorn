@@ -7,16 +7,16 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 class Model extends Eloquent
 {
     /**
-     * Get the table associated with the model.
+     * The name of the "created at" column.
      *
-     * @return string
+     * @var string|null
      */
-    public function getTable(): string
-    {
-        if ($this->table) {
-            return $this->table;
-        }
+    const CREATED_AT = 'post_date';
 
-        return sprintf('%s%s', $this->getConnection()->getTablePrefix(), parent::getTable());
-    }
+    /**
+     * The name of the "updated at" column.
+     *
+     * @var string|null
+     */
+    const UPDATED_AT = 'post_modified';
 }
