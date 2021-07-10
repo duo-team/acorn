@@ -32,6 +32,7 @@ class DuoTeamServiceProvider extends ServiceProvider
         $this->publishes([
             sprintf('%s/config/acf.php', $this->packagePath()) => config_path('acf.php'),
             sprintf('%s/config/filters.php', $this->packagePath()) => config_path('filters.php'),
+            sprintf('%s/config/database.php', $this->packagePath()) => config_path('database.php'),
         ], 'duo-team-config');
 
         $this->publishes([
@@ -48,6 +49,7 @@ class DuoTeamServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(sprintf('%s/config/acf.php', $this->packagePath()), 'acf');
         $this->mergeConfigFrom(sprintf('%s/config/filters.php', $this->packagePath()), 'filters');
+        $this->mergeConfigFrom(sprintf('%s/config/database.php', $this->packagePath()), 'database');
     }
 
     /**

@@ -20,7 +20,6 @@ class DatabaseServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->bindDatabase();
-        $this->setModelConnectionResolver();
     }
 
     /**
@@ -33,15 +32,5 @@ class DatabaseServiceProvider extends ServiceProvider
 
         $this->app->instance(WpDB::class, $wpdb);
         $this->app->bind(ConnectionInterface::class, Connection::class);
-    }
-
-    /**
-     * Set model connection resolver.
-     *
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
-    protected function setModelConnectionResolver(): void
-    {
-        Model::setConnectionResolver($this->app->make(ConnectionResolver::class));
     }
 }
