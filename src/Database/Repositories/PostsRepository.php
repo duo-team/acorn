@@ -2,7 +2,7 @@
 
 namespace DuoTeam\Acorn\Database\Repositories;
 
-use App\Models\Post;
+use DuoTeam\Acorn\Database\Models\Post;
 use DuoTeam\Acorn\Database\Repository;
 use DuoTeam\Acorn\Enums\PostCommentStatusEnum;
 use DuoTeam\Acorn\Enums\PostPingStatus;
