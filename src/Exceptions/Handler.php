@@ -5,6 +5,7 @@ namespace DuoTeam\Acorn\Exceptions;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\ValidationException;
 use Roots\Acorn\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
@@ -52,6 +53,16 @@ class Handler extends ExceptionHandler
         if ($e instanceof ModelNotFoundException) {
             $content = array_merge(['message' => $e->getMessage()], $debuggableContent);
             $status = Response::HTTP_NOT_FOUND;
+        }
+
+        if ($e instanceof ValidationException) {
+            $content = [
+                'data' => [
+                    'error_count' => $e->validator->errors()->count(),
+                    'errors' => $e->validator->errors()->getMessages()
+                ]
+            ];
+            $status = Response::HTTP_UNPROCESSABLE_ENTITY;
         }
 
         wp_send_json($content, $status);

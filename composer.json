@@ -11,6 +11,7 @@
     ],
     "require": {
         "illuminate/database": "^7.0",
+        "illuminate/validation": "^7.0",
         "league/fractal": "^0.19.2",
         "myclabs/php-enum": "^1.8",
         "roots/acorn": "^1.1"
@@ -32,6 +33,7 @@
         "acorn": {
             "providers": [
                 "DuoTeam\\Acorn\\Providers\\DuoTeamServiceProvider",
+                "DuoTeam\\Acorn\\Providers\\FormRequestServiceProvider",
                 "DuoTeam\\Acorn\\Routing\\Ajax\\Providers\\RoutingServiceProvider",
                 "DuoTeam\\Acorn\\Database\\Providers\\DatabaseServiceProvider"
             ]
