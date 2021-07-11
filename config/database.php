@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
+use function Roots\database_path;
 
 return [
 
