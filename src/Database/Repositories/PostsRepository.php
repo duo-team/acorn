@@ -11,7 +11,7 @@ use DuoTeam\Acorn\Enums\PostTypeEnum;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-class PostRepository extends Repository
+class PostsRepository extends Repository
 {
     /**
      * Post model instance.

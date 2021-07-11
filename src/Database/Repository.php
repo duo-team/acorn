@@ -5,7 +5,6 @@ namespace DuoTeam\Acorn\Database;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\QueryException;
 use RuntimeException;
 
 abstract class Repository
@@ -66,7 +65,7 @@ abstract class Repository
     public function update(string $id, array $attributes): Model
     {
         $model = $this->get($id);
-        $model->update($this->prepareAttributes($attributes));
+        $model->update($attributes);
 
         return $model->refresh();
     }
@@ -109,6 +108,18 @@ abstract class Repository
     public function all(): Collection
     {
         return $this->builder()->get();
+    }
+
+    /**
+     * Delete model from database.
+     *
+     * @param string $id
+     *
+     * @return bool
+     */
+    public function delete(string $id): bool
+    {
+        return $this->get($id, [$this->model()->getKeyName()])->delete();
     }
 
     /**
