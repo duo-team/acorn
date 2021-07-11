@@ -2,6 +2,7 @@
 
 namespace DuoTeam\Acorn\Exceptions;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Roots\Acorn\Exceptions\Handler as ExceptionHandler;
@@ -46,6 +47,11 @@ class Handler extends ExceptionHandler
         if ($e instanceof HttpExceptionInterface) {
             $content = array_merge(['message' => $e->getMessage()], $debuggableContent);
             $status = $e->getStatusCode();
+        }
+
+        if ($e instanceof ModelNotFoundException) {
+            $content = array_merge(['message' => $e->getMessage()], $debuggableContent);
+            $status = Response::HTTP_NOT_FOUND;
         }
 
         wp_send_json($content, $status);
