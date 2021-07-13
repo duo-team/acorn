@@ -16,6 +16,13 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class PostMeta extends Model
 {
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'postmeta';
+    
+    /**
      * Indicates if the model should be timestamped.
      *
      * @var bool
