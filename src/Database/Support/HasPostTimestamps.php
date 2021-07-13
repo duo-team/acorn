@@ -2,7 +2,7 @@
 
 namespace DuoTeam\Acorn\Database\Support;
 
-trait HasTimestamps
+trait HasPostTimestamps
 {
     /**
      * Get the name of the "created at" column.

@@ -2,8 +2,10 @@
 
 namespace DuoTeam\Acorn\Database\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use DuoTeam\Acorn\Database\Support;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -30,10 +32,12 @@ use Illuminate\Support\Carbon;
  * @property string $post_type
  * @property string $post_mime_type
  * @property int $comment_count
+ *
+ * @property Collection|PostMeta[] $meta
  */
 class Post extends Model
 {
-    use Support\HasTimestamps;
+    use Support\HasPostTimestamps;
 
     /**
      * The name of the "created at" column.
@@ -136,5 +140,15 @@ class Post extends Model
         $this->{$this->getUpdatedAtGmtColumn()} = Carbon::parse($value)->utc();
 
         return $this;
+    }
+
+    /**
+     * Get post related meta.
+     *
+     * @return HasMany
+     */
+    public function meta(): HasMany
+    {
+        return $this->hasMany(PostMeta::class, 'post_id', 'ID');
     }
 }
