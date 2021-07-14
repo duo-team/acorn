@@ -10,6 +10,7 @@ use DuoTeam\Acorn\Exceptions\Handler;
 use Roots\Acorn\Application;
 use Roots\Acorn\Bootloader as RootsKernel;
 use Illuminate\Contracts\Debug\ExceptionHandler as HandlerContract;
+use Roots\Acorn\Bootstrap\RegisterGlobals;
 use Roots\Acorn\Console\Kernel as RootsConsoleKernel;
 
 class Kernel extends RootsKernel
@@ -31,11 +32,11 @@ class Kernel extends RootsKernel
      */
     protected function replaceBindings(): void
     {
-        $this->call(function (Application $app) {
+        $this->queue[] = function (Application $app) {
             foreach ($this->bindingsToReplace as $abstract => $concrete) {
                 $app->singleton($abstract, $concrete);
             }
-        });
+        };
     }
 
     /**
@@ -57,6 +58,7 @@ class Kernel extends RootsKernel
     protected function bootstraps(): array
     {
         return array_merge([
+            RegisterGlobals::class,
             CaptureRequest::class,
         ], parent::bootstrap(), [
             ApplyFilters::class,
