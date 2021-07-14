@@ -47,12 +47,12 @@ class Kernel extends ConsoleKernel
      */
     protected function getConsole(): Application
     {
+        $this->app->loadDeferredProviders();
+
         $console = parent::getConsole();
         $console->resolveCommands($this->rootsCommands());
 
-        $this->app->loadDeferredProviders();
-
-        return $console;
+        return $this->console = $console;
     }
 
     /**
