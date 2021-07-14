@@ -1,6 +1,6 @@
 <?php
 
-namespace DuoTeam\Acorn\Database\Models;
+namespace DuoTeam\Acorn\Database\Models\Post;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
