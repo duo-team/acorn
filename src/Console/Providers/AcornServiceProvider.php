@@ -127,7 +127,11 @@ class AcornServiceProvider extends ServiceProvider implements DeferrableProvider
     protected function registerCommands(array $commands)
     {
         foreach (array_keys($commands) as $command) {
-            $this->{"register{$command}Command"}();
+            $registerMethod = "register{$command}Command";
+
+            if (method_exists($this, $registerMethod)) {
+                $this->$registerMethod();
+            }
         }
 
         $this->commands(array_values($commands));
