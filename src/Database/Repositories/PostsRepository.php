@@ -2,7 +2,8 @@
 
 namespace DuoTeam\Acorn\Database\Repositories;
 
-use DuoTeam\Acorn\Database\Models\Post;
+use DuoTeam\Acorn\Database\Exceptions\PostInsertException;
+use DuoTeam\Acorn\Database\Models\Post\Post;
 use DuoTeam\Acorn\Database\Repository;
 use DuoTeam\Acorn\Enums\PostCommentStatusEnum;
 use DuoTeam\Acorn\Enums\PostPingStatus;
@@ -36,6 +37,24 @@ class PostsRepository extends Repository
     public function model(): Model
     {
         return $this->model;
+    }
+
+    /**
+     * Create model.
+     *
+     * @param array $attributes
+     *
+     * @return Model
+     */
+    public function create(array $attributes): Model
+    {
+        $modelId = wp_insert_post($this->prepareAttributes($attributes));
+
+        if (is_wp_error($modelId)) {
+            throw PostInsertException::byWpError($modelId);
+        }
+
+        return $this->get($modelId);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace DuoTeam\Acorn\Database;
 
+use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -31,7 +32,7 @@ abstract class Repository
      *
      * @return array
      */
-    public function defaultAttributes(): array
+    protected function defaultAttributes(): array
     {
         return [];
     }
@@ -45,13 +46,7 @@ abstract class Repository
      */
     public function create(array $attributes): Model
     {
-        $modelId = wp_insert_post($this->prepareAttributes($attributes));
-
-        if (is_wp_error($modelId)) {
-            throw new RuntimeException($modelId->get_error_message());
-        }
-
-        return $this->get($modelId);
+        return $this->builder()->create($this->prepareAttributes($attributes));
     }
 
     /**
@@ -80,9 +75,7 @@ abstract class Repository
      */
     public function get(string $id, array $columns = ['*']): Model
     {
-        return $this->builder()
-            ->where($this->model()->getKeyName(), '=', $id)
-            ->firstOrFail($columns);
+        return $this->builder()->findOrFail($id, $columns);
     }
 
     /**
@@ -119,7 +112,11 @@ abstract class Repository
      */
     public function delete(string $id): bool
     {
-        return $this->get($id, [$this->model()->getKeyName()])->delete();
+        try {
+            return $this->get($id, [$this->model()->getKeyName()])->delete();
+        } catch (Exception $exception) {
+            return false;
+        }
     }
 
     /**
@@ -129,7 +126,7 @@ abstract class Repository
      *
      * @return array
      */
-    public function prepareAttributes(array $attributes): array
+    protected function prepareAttributes(array $attributes): array
     {
         return array_merge($this->defaultAttributes(), $attributes);
     }
