@@ -126,15 +126,18 @@ class AcornServiceProvider extends ServiceProvider implements DeferrableProvider
      */
     protected function registerCommands(array $commands)
     {
-        foreach (array_keys($commands) as $command) {
+        $toRegister = [];
+
+        foreach ($commands as $command => $signature) {
             $registerMethod = "register{$command}Command";
 
             if (method_exists($this, $registerMethod)) {
                 $this->$registerMethod();
+                $toRegister[] = $signature;
             }
         }
 
-        $this->commands(array_values($commands));
+        $this->commands($toRegister);
     }
 
     /**
@@ -347,18 +350,6 @@ class AcornServiceProvider extends ServiceProvider implements DeferrableProvider
     protected function registerScheduleRunCommand()
     {
         $this->app->singleton(ScheduleRunCommand::class);
-    }
-
-    /**
-     * Register the command.
-     *
-     * @return void
-     */
-    protected function registerUpCommand()
-    {
-        $this->app->singleton('command.up', function () {
-            return new UpCommand;
-        });
     }
 
     /**
