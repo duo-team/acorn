@@ -10,15 +10,16 @@
         }
     ],
     "require": {
+        "laravel-zero/foundation": "^7.0",
         "illuminate/bus": "^7.0",
         "illuminate/database": "^7.0",
         "illuminate/queue": "^7.0",
         "illuminate/redis": "^7.0",
         "illuminate/validation": "^7.0",
+        "roots/acorn": "^1.1"
         "league/fractal": "^0.19.2",
         "myclabs/php-enum": "^1.8",
         "predis/predis": "^1.1",
-        "roots/acorn": "^1.1"
     },
     "config": {
         "optimize-autoloader": true,

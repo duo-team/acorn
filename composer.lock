@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0c9488ffad6cf8a161506c7c93441e84",
+    "content-hash": "1198616484c29de181cd4e3e938adcf9",
     "packages": [
         {
             "name": "brick/math",
@@ -1339,6 +1339,51 @@
                 "source": "https://github.com/laravel/framework"
             },
             "time": "2020-10-27T15:11:37+00:00"
+        },
+        {
+            "name": "laravel-zero/foundation",
+            "version": "v7.28.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laravel-zero/foundation.git",
+                "reference": "4f432d614e10a022f43880fd11be8536d5d6e349"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laravel-zero/foundation/zipball/4f432d614e10a022f43880fd11be8536d5d6e349",
+                "reference": "4f432d614e10a022f43880fd11be8536d5d6e349",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-7.x": "7.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Illuminate/Foundation/helpers.php"
+                ],
+                "psr-4": {
+                    "Illuminate\\": "src/Illuminate/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "This is a mirror from illuminate/foundation.",
+            "keywords": [
+                "framework",
+                "laravel"
+            ],
+            "support": {
+                "source": "https://github.com/laravel-zero/foundation/tree/v7.28.1"
+            },
+            "time": "2020-09-10T08:27:00+00:00"
         },
         {
             "name": "league/flysystem",
