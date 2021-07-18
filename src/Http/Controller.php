@@ -3,11 +3,14 @@
 namespace DuoTeam\Acorn\Http;
 
 use DuoTeam\Acorn\Resources\Managers\ResourceTransformerManager;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Response;
 use League\Fractal\TransformerAbstract;
 
 abstract class Controller
 {
+    use DispatchesJobs;
+
     /**
      * Resource transformer manager instance.
      *
