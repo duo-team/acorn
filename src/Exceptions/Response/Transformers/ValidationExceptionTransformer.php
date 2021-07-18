@@ -18,9 +18,10 @@ class ValidationExceptionTransformer extends ExceptionTransformer
      */
     public function transform(Throwable $exception): array
     {
+
         return [
             'message' => trans('application.errors.validation'),
-            'errors' => $exception->validator->errors()->all()
+            'errors' => $exception->validator->errors()->getMessages()
         ];
     }
 
