@@ -1,7 +1,7 @@
 <?php
 
 
-namespace DuoTeam\Acorn\Enums;
+namespace DuoTeam\Acorn\Enums\Post;
 
 use MyCLabs\Enum\Enum;
 
