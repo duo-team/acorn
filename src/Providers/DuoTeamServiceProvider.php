@@ -4,12 +4,21 @@ namespace DuoTeam\Acorn\Providers;
 
 use DuoTeam\Acorn\Http\Controller;
 use DuoTeam\Acorn\Resources\Managers\ResourceTransformerManager;
+use Illuminate\Support\AggregateServiceProvider;
 use Roots\Acorn\ServiceProvider;
 use function Roots\config_path;
 use function Roots\resource_path;
 
-class DuoTeamServiceProvider extends ServiceProvider
+class DuoTeamServiceProvider extends AggregateServiceProvider
 {
+    /**
+     *
+     * @var string[]
+     */
+    protected $providers = [
+        FormRequestServiceProvider::class
+    ];
+
     /**
      * Bootstrap any package services.
      *

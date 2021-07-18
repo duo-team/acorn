@@ -39,9 +39,7 @@
         "acorn": {
             "providers": [
                 "DuoTeam\\Acorn\\Providers\\DuoTeamServiceProvider",
-                "DuoTeam\\Acorn\\Providers\\FormRequestServiceProvider",
-                "DuoTeam\\Acorn\\Routing\\Ajax\\Providers\\RoutingServiceProvider",
-                "DuoTeam\\Acorn\\Database\\Providers\\DatabaseServiceProvider"
+                "DuoTeam\\Acorn\\Routing\\Ajax\\Providers\\RoutingServiceProvider"
             ]
         }
     }

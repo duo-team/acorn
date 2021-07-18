@@ -4,7 +4,7 @@ namespace DuoTeam\Acorn\Providers;
 
 use Illuminate\Contracts\Validation\ValidatesWhenResolved;
 use DuoTeam\Acorn\Http\FormRequest;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\Providers\FormRequestServiceProvider as ServiceProvider;
 
 class FormRequestServiceProvider extends ServiceProvider
 {
