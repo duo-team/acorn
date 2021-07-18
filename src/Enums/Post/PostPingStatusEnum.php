@@ -6,10 +6,10 @@ namespace DuoTeam\Acorn\Enums\Post;
 use MyCLabs\Enum\Enum;
 
 /**
- * @method static PostPingStatus OPEN()
- * @method static PostPingStatus CLOSED()
+ * @method static PostPingStatusEnum OPEN()
+ * @method static PostPingStatusEnum CLOSED()
  */
-class PostPingStatus extends Enum
+class PostPingStatusEnum extends Enum
 {
     protected const OPEN = 'open';
     protected const CLOSED = 'closed';

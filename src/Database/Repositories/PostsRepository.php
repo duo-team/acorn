@@ -6,7 +6,7 @@ use DuoTeam\Acorn\Database\Exceptions\PostInsertException;
 use DuoTeam\Acorn\Database\Models\Post\Post;
 use DuoTeam\Acorn\Database\Repository;
 use DuoTeam\Acorn\Enums\Post\PostCommentStatusEnum;
-use DuoTeam\Acorn\Enums\Post\PostPingStatus;
+use DuoTeam\Acorn\Enums\Post\PostPingStatusEnum;
 use DuoTeam\Acorn\Enums\Post\PostStatusEnum;
 use DuoTeam\Acorn\Enums\Post\PostTypeEnum;
 use Illuminate\Database\Eloquent\Builder;
@@ -76,7 +76,7 @@ class PostsRepository extends Repository
             'post_excerpt' => '',
             'post_status' => PostStatusEnum::PRIVATE(),
             'comment_status' => PostCommentStatusEnum::CLOSED(),
-            'ping_status' => PostPingStatus::CLOSED(),
+            'ping_status' => PostPingStatusEnum::CLOSED(),
         ];
     }
 }
