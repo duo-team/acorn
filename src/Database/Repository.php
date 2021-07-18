@@ -6,37 +6,9 @@ use Exception;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use RuntimeException;
 
 abstract class Repository
 {
-    /**
-     * Get model instance.
-     *
-     * @return Model
-     */
-    abstract public function model(): Model;
-
-    /**
-     * Get eloquent builder instance.
-     *
-     * @return Builder
-     */
-    public function builder(): Builder
-    {
-        return $this->model()->newQuery();
-    }
-
-    /**
-     * Get model default attributes values.
-     *
-     * @return array
-     */
-    protected function defaultAttributes(): array
-    {
-        return [];
-    }
-
     /**
      * Create model.
      *
@@ -117,6 +89,23 @@ abstract class Repository
         } catch (Exception $exception) {
             return false;
         }
+    }
+
+    /**
+     * Get eloquent builder instance.
+     *
+     * @return Builder
+     */
+    abstract protected function builder(): Builder;
+
+    /**
+     * Get model default attributes values.
+     *
+     * @return array
+     */
+    protected function defaultAttributes(): array
+    {
+        return [];
     }
 
     /**
