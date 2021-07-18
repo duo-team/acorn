@@ -120,7 +120,7 @@ class Post extends Model
      * @param mixed $value
      * @return $this
      */
-    public function setCreatedAt($value)
+    public function setCreatedAt($value): self
     {
         parent::setCreatedAt($value);
         $this->{$this->getCreatedAtGmtColumn()} = Carbon::parse($value)->utc();
@@ -134,7 +134,7 @@ class Post extends Model
      * @param mixed $value
      * @return $this
      */
-    public function setUpdatedAt($value)
+    public function setUpdatedAt($value): self
     {
         parent::setUpdatedAt($value);
         $this->{$this->getUpdatedAtGmtColumn()} = Carbon::parse($value)->utc();

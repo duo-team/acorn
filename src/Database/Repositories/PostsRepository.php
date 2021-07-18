@@ -15,28 +15,13 @@ use Illuminate\Database\Eloquent\Model;
 class PostsRepository extends Repository
 {
     /**
-     * Post model instance.
-     *
-     * @var Post
-     */
-    private $model;
-
-    /**
-     * @param Post $model
-     */
-    public function __construct(Post $model)
-    {
-        $this->model = $model;
-    }
-
-    /**
      * Get model instance.
      *
      * @return Model
      */
     public function model(): Model
     {
-        return $this->model;
+        return new Post();
     }
 
     /**
