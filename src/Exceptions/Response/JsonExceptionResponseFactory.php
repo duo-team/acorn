@@ -68,9 +68,10 @@ class JsonExceptionResponseFactory implements ResponseFactoryInterface
     {
         $statusCode = $this->resolveStatusCodeForException($exception);
         $transformer = $this->resolveTransformerForException($exception)->setStatusCode($statusCode);
+        $response = $this->transformerManager->item($exception, $transformer);
 
         wp_send_json(
-            $this->transformerManager->item($exception, $transformer),
+            ['data' => $response],
             $statusCode
         );
     }
