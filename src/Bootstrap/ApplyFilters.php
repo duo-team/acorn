@@ -42,7 +42,7 @@ class ApplyFilters extends Bootstrapper
     protected function getFilters(): Collection
     {
         return $this->collectFilters()->map(function (string $filter) {
-            $this->app->make($filter);
+            return $this->app->make($filter);
         });
     }
 
