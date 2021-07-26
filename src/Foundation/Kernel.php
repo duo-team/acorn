@@ -5,6 +5,7 @@ namespace DuoTeam\Acorn\Foundation;
 use DuoTeam\Acorn\Bootstrap\ApplyFilters;
 use DuoTeam\Acorn\Bootstrap\HandleExceptions;
 use DuoTeam\Acorn\Bootstrap\CaptureRequest;
+use DuoTeam\Acorn\Bootstrap\RegisterCustomPostTypes;
 use Roots\Acorn\Bootloader as RootsKernel;
 use Roots\Acorn\Bootstrap\RegisterGlobals;
 
@@ -31,8 +32,9 @@ class Kernel extends RootsKernel
             RegisterGlobals::class,
             CaptureRequest::class,
         ], parent::bootstrap(), [
+            HandleExceptions::class,
             ApplyFilters::class,
-            HandleExceptions::class
+            RegisterCustomPostTypes::class
         ]);
     }
 }

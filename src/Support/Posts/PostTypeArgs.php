@@ -24,10 +24,7 @@ abstract class PostTypeArgs implements Arrayable
      *
      * @return string
      */
-    public function getLabel(): string
-    {
-        return 'Frameworks';
-    }
+    abstract public function getLabel(): string;
 
     /**
      * An array of labels for this post type.
