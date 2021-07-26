@@ -29,7 +29,9 @@ class ApplyFilters extends Bootstrapper
         $filters = $this->app['config']->get('filters', []);
         $filters = Arr::wrap($filters);
 
-        return collect($filters)->filter('is_string')->values();
+        return collect($filters)->filter(function ($value) {
+            return is_string($value);
+        })->values();
     }
 
     /**
