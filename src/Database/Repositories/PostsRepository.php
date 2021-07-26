@@ -5,25 +5,16 @@ namespace DuoTeam\Acorn\Database\Repositories;
 use DuoTeam\Acorn\Database\Exceptions\PostInsertException;
 use DuoTeam\Acorn\Database\Models\Post\Post;
 use DuoTeam\Acorn\Database\Repository;
-use DuoTeam\Acorn\Enums\PostCommentStatusEnum;
-use DuoTeam\Acorn\Enums\PostPingStatus;
-use DuoTeam\Acorn\Enums\PostStatusEnum;
-use DuoTeam\Acorn\Enums\PostTypeEnum;
+use DuoTeam\Acorn\Enums\Post\PostCommentStatusEnum;
+use DuoTeam\Acorn\Enums\Post\PostPingStatusEnum;
+use DuoTeam\Acorn\Enums\Post\PostStatusEnum;
+use DuoTeam\Acorn\Enums\Post\PostTypeEnum;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class PostsRepository extends Repository
 {
-    /**
-     * Get model instance.
-     *
-     * @return Model
-     */
-    public function model(): Model
-    {
-        return new Post();
-    }
-
     /**
      * Create model.
      *
@@ -43,23 +34,6 @@ class PostsRepository extends Repository
     }
 
     /**
-     * Get model default attributes values.
-     *
-     * @return array
-     */
-    public function defaultAttributes(): array
-    {
-        return [
-            'post_content' => '',
-            'post_title' => '',
-            'post_excerpt' => '',
-            'post_status' => PostStatusEnum::PRIVATE(),
-            'comment_status' => PostCommentStatusEnum::CLOSED(),
-            'ping_status' => PostPingStatus::CLOSED(),
-        ];
-    }
-
-    /**
      * Get all models.
      *
      * @return Collection
@@ -67,7 +41,42 @@ class PostsRepository extends Repository
     public function all(): Collection
     {
         return $this->builder()
-            ->where('post_type', '=', PostTypeEnum::POST())
+            ->where('post_type', '=', $this->postType())
             ->get();
+    }
+
+    /**
+     * Get eloquent builder instance.
+     *
+     * @return Builder
+     */
+    protected function builder(): Builder
+    {
+        return Post::query();
+    }
+
+    /**
+     * @return PostTypeEnum
+     */
+    protected function postType(): PostTypeEnum
+    {
+        return PostTypeEnum::POST();
+    }
+
+    /**
+     * Get model default attributes values.
+     *
+     * @return array
+     */
+    protected function defaultAttributes(): array
+    {
+        return [
+            'post_content' => '',
+            'post_title' => '',
+            'post_excerpt' => '',
+            'post_status' => PostStatusEnum::PRIVATE(),
+            'comment_status' => PostCommentStatusEnum::CLOSED(),
+            'ping_status' => PostPingStatusEnum::CLOSED(),
+        ];
     }
 }

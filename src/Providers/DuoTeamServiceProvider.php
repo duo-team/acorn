@@ -5,7 +5,6 @@ namespace DuoTeam\Acorn\Providers;
 use DuoTeam\Acorn\Http\Controller;
 use DuoTeam\Acorn\Resources\Managers\ResourceTransformerManager;
 use Illuminate\Support\AggregateServiceProvider;
-use Roots\Acorn\ServiceProvider;
 use function Roots\config_path;
 use function Roots\resource_path;
 
@@ -43,6 +42,7 @@ class DuoTeamServiceProvider extends AggregateServiceProvider
             sprintf('%s/config/filters.php', $this->packagePath()) => config_path('filters.php'),
             sprintf('%s/config/database.php', $this->packagePath()) => config_path('database.php'),
             sprintf('%s/config/queue.php', $this->packagePath()) => config_path('queue.php'),
+            sprintf('%s/config/post_types.php', $this->packagePath()) => config_path('post_types.php'),
         ], 'duo-team-config');
 
         $this->publishes([
@@ -61,6 +61,7 @@ class DuoTeamServiceProvider extends AggregateServiceProvider
         $this->mergeConfigFrom(sprintf('%s/config/filters.php', $this->packagePath()), 'filters');
         $this->mergeConfigFrom(sprintf('%s/config/database.php', $this->packagePath()), 'database');
         $this->mergeConfigFrom(sprintf('%s/config/queue.php', $this->packagePath()), 'queue');
+        $this->mergeConfigFrom(sprintf('%s/config/post_types.php', $this->packagePath()), 'post_types');
     }
 
     /**
