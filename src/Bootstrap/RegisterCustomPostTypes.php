@@ -55,6 +55,8 @@ class RegisterCustomPostTypes extends Bootstrapper
         $postTypes = $this->app['config']->get('post_types', []);
         $postTypes = Arr::wrap($postTypes);
 
-        return collect($postTypes)->filter('is_string')->values();
+        return collect($postTypes)->filter(function ($value) {
+            return is_string($value);
+        })->values();
     }
 }
