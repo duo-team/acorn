@@ -183,11 +183,11 @@ abstract class PostTypeArgs implements Arrayable
     /**
      * The string to use to build the read, edit, and delete capabilities
      *
-     * @return string[]
+     * @return string[]|string
      */
-    public function getCapabilityType(): array
+    public function getCapabilityType()
     {
-        return ['post', 'posts'];
+        return 'post';
     }
 
     /**
@@ -205,9 +205,9 @@ abstract class PostTypeArgs implements Arrayable
      *
      * @return bool
      */
-    public function shouldMapMetaCapabilities(): bool
+    public function shouldMapMetaCapabilities(): ?bool
     {
-        return false;
+        return null;
     }
 
     /**
