@@ -60,8 +60,12 @@ abstract class Taxonomy
      */
     public function register(): void
     {
-        $this->assertSupportedPostTypesIsValid();
-        $result = register_taxonomy($this->getTaxonomy(), $this->supports(), $this->getArgs()->toArray());
+        $this->assertSupportedPostTypes();
+        $result = register_taxonomy(
+            $this->getTaxonomy()->getValue(),
+            $this->prepareSupportedPostTypesToRegistry($this->supports()),
+            $this->getArgs()->toArray()
+        );
 
         if (is_wp_error($result)) {
             throw RegisterTaxonomyException::fromWordPressError($result);
@@ -73,9 +77,23 @@ abstract class Taxonomy
      *
      * @return void
      */
-    protected function assertSupportedPostTypesIsValid(): void
+    protected function assertSupportedPostTypes(): void
     {
         Assert::notEmpty($this->supports());
         Assert::allIsInstanceOf($this->supports(), PostTypeEnum::class);
+    }
+
+    /**
+     * Change enum to strings.
+     *
+     * @param array<PostTypeEnum> $supports
+     *
+     * @return array<string>
+     */
+    private function prepareSupportedPostTypesToRegistry(array $supports): array
+    {
+        return array_map(function (PostTypeEnum $postType) {
+            return $postType->getValue();
+        }, $supports);
     }
 }

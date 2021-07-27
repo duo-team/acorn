@@ -46,7 +46,10 @@ abstract class PostType
      */
     public function register(): void
     {
-        $result = register_post_type($this->getPostType(), $this->getArgs()->toArray());
+        $result = register_post_type(
+            $this->getPostType()->getValue(),
+            $this->getArgs()->toArray()
+        );
 
         if (is_wp_error($result)) {
             throw RegisterPostTypeException::fromWordPressError($result);
