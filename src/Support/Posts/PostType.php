@@ -3,7 +3,8 @@
 namespace DuoTeam\Acorn\Support\Posts;
 
 use DuoTeam\Acorn\Enums\Post\PostTypeEnum;
-use DuoTeam\Acorn\Support\Posts\Exceptions\RegisterPostException;
+use DuoTeam\Acorn\Support\Posts\Exceptions\RegisterPostTypeException;
+use Throwable;
 
 abstract class PostType
 {
@@ -30,24 +31,25 @@ abstract class PostType
     /**
      * Get args used for registering.
      *
-     * @return array
+     * @return PostTypeArgs
      */
-    public function getArgs(): array
+    public function getArgs(): PostTypeArgs
     {
-        return $this->args->toArray();
+        return $this->args;
     }
 
     /**
      * Register post in system.
      *
      * @return void
+     * @throws Throwable
      */
     public function register(): void
     {
-        $result = register_post_type($this->getPostType(), $this->getArgs());
+        $result = register_post_type($this->getPostType(), $this->getArgs()->toArray());
 
         if (is_wp_error($result)) {
-            throw new RegisterPostException($result->get_error_message());
+            throw RegisterPostTypeException::fromWordPressError($result);
         }
     }
 }
