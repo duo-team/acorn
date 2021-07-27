@@ -88,6 +88,17 @@ abstract class TaxonomyArgs implements Arrayable
     }
 
     /**
+     * Get metabox callback.
+     * Set to false to hide it.
+     *
+     * @return callable|false
+     */
+    public function getMetaBoxCallback()
+    {
+        return false;
+    }
+
+    /**
      * Makes this taxonomy available for selection in navigation menus.
      *
      * @return bool
@@ -244,6 +255,7 @@ abstract class TaxonomyArgs implements Arrayable
             'hierarchical' => $this->isHierarchical(),
             'show_ui' => $this->isManageable(),
             'show_in_menu' => $this->isVisibleInAdmin(),
+            'meta_box_cb' => $this->getMetaBoxCallback(),
             'show_in_nav_menus' => $this->isVisibleInNavMenus(),
             'show_in_rest' => $this->isVisibleInRest(),
             'rest_base' => $this->getRestBase(),
