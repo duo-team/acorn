@@ -6,6 +6,7 @@ use DuoTeam\Acorn\Bootstrap\Common\Bootstrapper;
 use DuoTeam\Acorn\Support\Posts\PostType;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use Throwable;
 
 class RegisterCustomPostTypes extends Bootstrapper
 {
@@ -13,6 +14,7 @@ class RegisterCustomPostTypes extends Bootstrapper
      * Register post types.
      *
      * @return void
+     * @throws Throwable
      */
     public function handle(): void
     {
@@ -25,6 +27,7 @@ class RegisterCustomPostTypes extends Bootstrapper
      * @param Collection $postTypes
      *
      * @return void
+     * @throws Throwable
      */
     protected function registerPostTypes(Collection $postTypes): void
     {
@@ -55,8 +58,10 @@ class RegisterCustomPostTypes extends Bootstrapper
         $postTypes = $this->app['config']->get('post_types', []);
         $postTypes = Arr::wrap($postTypes);
 
-        return collect($postTypes)->filter(function ($value) {
-            return is_string($value);
-        })->values();
+        return collect($postTypes)
+            ->filter(function ($value) {
+                return is_string($value);
+            })
+            ->values();
     }
 }

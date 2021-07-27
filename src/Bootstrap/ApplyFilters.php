@@ -6,6 +6,7 @@ use DuoTeam\Acorn\Bootstrap\Common\Bootstrapper;
 use DuoTeam\Acorn\Support\Filter;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
+use ReflectionException;
 
 class ApplyFilters extends Bootstrapper
 {
@@ -13,6 +14,7 @@ class ApplyFilters extends Bootstrapper
      * Handle bootstrap.
      *
      * @return void
+     * @throws ReflectionException
      */
     public function handle(): void
     {
@@ -20,18 +22,16 @@ class ApplyFilters extends Bootstrapper
     }
 
     /**
-     * Collect filters from application config.
+     * Apply filters in system.
      *
-     * @return Collection
+     * @param Collection $filters
+     * @throws ReflectionException
      */
-    protected function collectFilters(): Collection
+    protected function applyFilters(Collection $filters): void
     {
-        $filters = $this->app['config']->get('filters', []);
-        $filters = Arr::wrap($filters);
-
-        return collect($filters)->filter(function ($value) {
-            return is_string($value);
-        })->values();
+        $filters->each(function (Filter $filter) {
+            $filter->apply();
+        });
     }
 
     /**
@@ -47,14 +47,19 @@ class ApplyFilters extends Bootstrapper
     }
 
     /**
-     * Apply filters in system.
+     * Collect filters from application config.
      *
-     * @param Collection $filters
+     * @return Collection
      */
-    protected function applyFilters(Collection $filters): void
+    protected function collectFilters(): Collection
     {
-        $filters->each(function (Filter $filter) {
-            $filter->apply();
-        });
+        $filters = $this->app['config']->get('filters', []);
+        $filters = Arr::wrap($filters);
+
+        return collect($filters)
+            ->filter(function ($value) {
+                return is_string($value);
+            })
+            ->values();
     }
 }

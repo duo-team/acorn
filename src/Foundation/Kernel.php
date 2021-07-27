@@ -6,6 +6,7 @@ use DuoTeam\Acorn\Bootstrap\ApplyFilters;
 use DuoTeam\Acorn\Bootstrap\HandleExceptions;
 use DuoTeam\Acorn\Bootstrap\CaptureRequest;
 use DuoTeam\Acorn\Bootstrap\RegisterCustomPostTypes;
+use DuoTeam\Acorn\Bootstrap\RegisterTaxonomies;
 use Roots\Acorn\Bootloader as RootsKernel;
 use Roots\Acorn\Bootstrap\RegisterGlobals;
 
@@ -34,7 +35,8 @@ class Kernel extends RootsKernel
         ], parent::bootstrap(), [
             HandleExceptions::class,
             ApplyFilters::class,
-            RegisterCustomPostTypes::class
+            RegisterCustomPostTypes::class,
+            RegisterTaxonomies::class
         ]);
     }
 }

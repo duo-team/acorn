@@ -43,6 +43,7 @@ class DuoTeamServiceProvider extends AggregateServiceProvider
             sprintf('%s/config/database.php', $this->packagePath()) => config_path('database.php'),
             sprintf('%s/config/queue.php', $this->packagePath()) => config_path('queue.php'),
             sprintf('%s/config/post_types.php', $this->packagePath()) => config_path('post_types.php'),
+            sprintf('%s/config/taxonomies.php', $this->packagePath()) => config_path('taxonomies.php'),
         ], 'duo-team-config');
 
         $this->publishes([
@@ -62,6 +63,7 @@ class DuoTeamServiceProvider extends AggregateServiceProvider
         $this->mergeConfigFrom(sprintf('%s/config/database.php', $this->packagePath()), 'database');
         $this->mergeConfigFrom(sprintf('%s/config/queue.php', $this->packagePath()), 'queue');
         $this->mergeConfigFrom(sprintf('%s/config/post_types.php', $this->packagePath()), 'post_types');
+        $this->mergeConfigFrom(sprintf('%s/config/taxonomies.php', $this->packagePath()), 'taxonomies');
     }
 
     /**
