@@ -3,6 +3,7 @@
 namespace DuoTeam\Acorn\Database\Models\Post;
 
 use DuoTeam\Acorn\Enums\Post\PostTypeEnum;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use DuoTeam\Acorn\Database\Support;
@@ -164,7 +165,7 @@ class Post extends Model
      * Get a new query builder that doesn't have any global scopes or eager loading.
      * Return query for current post type.
      *
-     * @return \Illuminate\Database\Eloquent\Builder|static
+     * @return Builder|static
      */
     public function newModelQuery()
     {
