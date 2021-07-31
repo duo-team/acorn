@@ -26,7 +26,7 @@ class PostsRepository extends EloquentRepository
         ]));
 
         if (is_wp_error($modelId)) {
-            throw ModelInsertException::byWpError($modelId);
+            throw ModelInsertException::fromWordPressError($modelId);
         }
 
         return $this->get($modelId);

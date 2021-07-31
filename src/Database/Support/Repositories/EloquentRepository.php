@@ -6,6 +6,7 @@ namespace DuoTeam\Acorn\Database\Support\Repositories;
 
 use DuoTeam\Acorn\Database\Interfaces\EloquentRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 
 abstract class EloquentRepository implements EloquentRepositoryInterface
@@ -39,6 +40,43 @@ abstract class EloquentRepository implements EloquentRepositoryInterface
     }
 
     /**
+     * Get model by column.
+     *
+     * @param string $column
+     * @param string $value
+     * @param array $columns
+     *
+     * @return Model
+     */
+    public function getByColumn(string $column, string $value, array $columns = ['*']): Model
+    {
+        $model = $this->findByColumn($column, $value, $columns);
+
+        if (!$model) {
+            $this->throwNotFoundException([sprintf('[%s => %s]', $column, $value)]);
+        }
+
+        return $model;
+    }
+
+    /**
+     * Find model by column or return null if model not found.
+     *
+     * @param string $column
+     * @param string $value
+     * @param array $columns
+     *
+     * @return Model
+     */
+    public function findByColumn(string $column, string $value, array $columns = ['*']): ?Model
+    {
+        return $this->builder()
+            ->select($columns)
+            ->where($column, '=', $value)
+            ->first();
+    }
+
+    /**
      * Get model with id or fail.
      *
      * @param string $id
@@ -48,7 +86,13 @@ abstract class EloquentRepository implements EloquentRepositoryInterface
      */
     public function get(string $id, array $columns = ['*']): Model
     {
-        return $this->builder()->findOrFail($id, $columns);
+        $model = $this->find($id, $columns);
+
+        if (!$model) {
+            $this->throwNotFoundException([$id]);
+        }
+
+        return $model;
     }
 
     /**
@@ -61,9 +105,7 @@ abstract class EloquentRepository implements EloquentRepositoryInterface
      */
     public function find(string $id, array $columns = ['*']): ?Model
     {
-        return $this->builder()
-            ->where($this->model()->getKeyName(), '=', $id)
-            ->first($columns);
+        return $this->builder()->find($id);
     }
 
     /**
@@ -112,5 +154,19 @@ abstract class EloquentRepository implements EloquentRepositoryInterface
     protected function model(): Model
     {
         return $this->builder()->getModel();
+    }
+
+    /**
+     * Throw not found exception for model.
+     *
+     * @param array $ids
+     *
+     * @return void
+     */
+    protected function throwNotFoundException(array $ids): void
+    {
+        throw (new ModelNotFoundException)->setModel(
+            get_class($this->model()), $ids
+        );
     }
 }

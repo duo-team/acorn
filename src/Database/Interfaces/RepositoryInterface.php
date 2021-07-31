@@ -39,6 +39,17 @@ interface RepositoryInterface
     public function get(string $id, array $columns = ['*']): Model;
 
     /**
+     * Get model by column.
+     *
+     * @param string $column
+     * @param string $value
+     * @param array $columns
+     *
+     * @return Model
+     */
+    public function getByColumn(string $column, string $value, array $columns = ['*']): Model;
+
+    /**
      * Get model with id or return null.
      *
      * @param string $id
@@ -47,6 +58,17 @@ interface RepositoryInterface
      * @return Model
      */
     public function find(string $id, array $columns = ['*']): ?Model;
+
+    /**
+     * Find model by column or return null if model not found.
+     *
+     * @param string $column
+     * @param string $value
+     * @param array $columns
+     *
+     * @return Model
+     */
+    public function findByColumn(string $column, string $value, array $columns = ['*']): ?Model;
 
     /**
      * Get all models.

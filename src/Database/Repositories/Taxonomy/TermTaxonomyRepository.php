@@ -3,11 +3,14 @@
 namespace DuoTeam\Acorn\Database\Repositories\Taxonomy;
 
 use DuoTeam\Acorn\Database\Exceptions\ModelInsertException;
+use DuoTeam\Acorn\Database\Exceptions\ModelRetrieveException;
 use DuoTeam\Acorn\Database\Models\Taxonomy\TermTaxonomy;
 use DuoTeam\Acorn\Database\Support\Repositories\EloquentRepository;
 use DuoTeam\Acorn\Enums\Taxonomy\TaxonomyEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use RuntimeException;
 use Webmozart\Assert\Assert;
 
 class TermTaxonomyRepository extends EloquentRepository
@@ -40,7 +43,7 @@ class TermTaxonomyRepository extends EloquentRepository
         );
 
         if (is_wp_error($result)) {
-            throw ModelInsertException::byWpError($result);
+            throw ModelInsertException::fromWordPressError($result);
         }
 
         Assert::isArray($result);
@@ -70,6 +73,41 @@ class TermTaxonomyRepository extends EloquentRepository
     public function builder(): Builder
     {
         return TermTaxonomy::query();
+    }
+
+    /**
+     * Find model by column or return null if model not found.
+     *
+     * @param string $column
+     * @param string $value
+     * @param array $columns
+     *
+     * @return Model
+     */
+    public function findByColumn(string $column, string $value, array $columns = ['*']): ?Model
+    {
+        $term = get_term_by($column, $value, $this->getTaxonomy()->getValue());
+
+        if (is_wp_error($term)) {
+            throw ModelRetrieveException::fromWordPressError($term);
+        }
+
+        if (!$term) {
+            return null;
+        }
+
+        return $term;
+    }
+
+    /**
+     * Get
+     * @param string $name
+     *
+     * @return Model
+     */
+    public function getByName(string $name): Model
+    {
+        return $this->getByColumn('name', $name);
     }
 
     /**
