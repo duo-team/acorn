@@ -3,6 +3,7 @@
 namespace DuoTeam\Acorn\Database\Support\Seeders;
 
 use DuoTeam\Acorn\Database\Repositories\Taxonomy\TermTaxonomyRepository;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Database\Seeder;
 use Webmozart\Assert\Assert;
 
@@ -21,11 +22,12 @@ abstract class TaxonomySeeder extends Seeder
     protected $termsTaxonomies;
 
     /**
-     * @param TermTaxonomyRepository $termsTaxonomies
+     * TaxonomySeeder constructor.
+     * @throws BindingResolutionException
      */
-    public function __construct(TermTaxonomyRepository $termsTaxonomies)
+    public function __construct()
     {
-        $this->termsTaxonomies = $termsTaxonomies;
+        $this->termsTaxonomies = $this->makeTermsTaxonomies();
     }
 
     /**
@@ -71,5 +73,29 @@ abstract class TaxonomySeeder extends Seeder
         }
 
         return ['term' => $term];
+    }
+
+    /**
+     * Get made term taxonomy repository instance.
+     *
+     * @return TermTaxonomyRepository
+     * @throws BindingResolutionException
+     */
+    public function makeTermsTaxonomies(): TermTaxonomyRepository
+    {
+        $termTaxonomyRepository = $this->getTermTaxonomyRepository();
+        Assert::isAOf($termTaxonomyRepository, TermTaxonomyRepository::class);
+
+        return $this->container->make($termTaxonomyRepository);
+    }
+
+    /**
+     * Get class for repository to use.
+     *
+     * @return string
+     */
+    public function getTermTaxonomyRepository(): string
+    {
+        return TermTaxonomyRepository::class;
     }
 }
