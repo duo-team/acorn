@@ -13,6 +13,17 @@ use Webmozart\Assert\Assert;
 class TermTaxonomyRepository extends EloquentRepository
 {
     /**
+     * Create term from name.
+     *
+     * @param string $termName
+     * @return Model
+     */
+    public function createFromName(string $termName): Model
+    {
+        return $this->create(['term' => $termName]);
+    }
+
+    /**
      * Create model.
      *
      * @param array $attributes
@@ -47,7 +58,7 @@ class TermTaxonomyRepository extends EloquentRepository
      */
     public function exists(string $id): bool
     {
-        return ! empty(term_exists($id, $this->getTaxonomy()->getValue()));
+        return !empty(term_exists($id, $this->getTaxonomy()->getValue()));
     }
 
 
