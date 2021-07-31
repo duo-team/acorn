@@ -1,13 +1,10 @@
 <?php
 
-namespace DuoTeam\Acorn\Database\Repositories;
+namespace DuoTeam\Acorn\Database\Repositories\Post;
 
-use DuoTeam\Acorn\Database\Exceptions\PostInsertException;
+use DuoTeam\Acorn\Database\Exceptions\ModelInsertException;
 use DuoTeam\Acorn\Database\Models\Post\Post;
 use DuoTeam\Acorn\Database\Support\Repositories\EloquentRepository;
-use DuoTeam\Acorn\Enums\Post\PostCommentStatusEnum;
-use DuoTeam\Acorn\Enums\Post\PostPingStatusEnum;
-use DuoTeam\Acorn\Enums\Post\PostStatusEnum;
 use DuoTeam\Acorn\Enums\Post\PostTypeEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
@@ -24,10 +21,12 @@ class PostsRepository extends EloquentRepository
      */
     public function create(array $attributes): Model
     {
-        $modelId = wp_insert_post($attributes);
+        $modelId = wp_insert_post(array_merge($attributes, [
+            'post_type' => $this->getPostType()
+        ]));
 
         if (is_wp_error($modelId)) {
-            throw PostInsertException::byWpError($modelId);
+            throw ModelInsertException::byWpError($modelId);
         }
 
         return $this->get($modelId);
@@ -41,7 +40,7 @@ class PostsRepository extends EloquentRepository
     public function all(): Collection
     {
         return $this->builder()
-            ->where('post_type', '=', $this->postType())
+            ->where('post_type', '=', $this->getPostType())
             ->get();
     }
 
@@ -56,9 +55,11 @@ class PostsRepository extends EloquentRepository
     }
 
     /**
+     * Get used post type.
+     *
      * @return PostTypeEnum
      */
-    protected function postType(): PostTypeEnum
+    protected function getPostType(): PostTypeEnum
     {
         return PostTypeEnum::POST();
     }
