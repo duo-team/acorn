@@ -22,21 +22,14 @@ abstract class TaxonomySeeder extends Seeder
     protected $termsTaxonomies;
 
     /**
-     * TaxonomySeeder constructor.
-     * @throws BindingResolutionException
-     */
-    public function __construct()
-    {
-        $this->termsTaxonomies = $this->makeTermsTaxonomies();
-    }
-
-    /**
      * Run the database seeds.
      *
      * @return void
+     * @throws BindingResolutionException
      */
     public function run()
     {
+        $this->termsTaxonomies = $this->makeTermsTaxonomies();
         $this->createTerms();
     }
 
