@@ -2,6 +2,7 @@
 
 namespace DuoTeam\Acorn\Database\Models\Post;
 
+use DuoTeam\Acorn\Enums\Post\PostTypeEnum;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use DuoTeam\Acorn\Database\Support;
@@ -157,5 +158,27 @@ class Post extends Model
     public function meta(): HasMany
     {
         return $this->hasMany(PostMeta::class, 'post_id', 'ID');
+    }
+
+    /**
+     * Get a new query builder that doesn't have any global scopes or eager loading.
+     * Return query for current post type.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder|static
+     */
+    public function newModelQuery()
+    {
+        return parent::newModelQuery()
+            ->where('post_type', '=', $this->getPostType()->getValue());
+    }
+
+    /**
+     * Get post type.
+     *
+     * @return PostTypeEnum
+     */
+    public function getPostType(): PostTypeEnum
+    {
+        return PostTypeEnum::POST();
     }
 }
