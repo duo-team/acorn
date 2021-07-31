@@ -2,11 +2,13 @@
 
 namespace DuoTeam\Acorn\Database\Models\Post;
 
+use DuoTeam\Acorn\Database\Models\Taxonomy\TermTaxonomy;
 use DuoTeam\Acorn\Enums\Post\PostTypeEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use DuoTeam\Acorn\Database\Support;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
@@ -36,6 +38,7 @@ use Illuminate\Support\Carbon;
  * @property int $comment_count
  *
  * @property Collection|PostMeta[] $meta
+ * @property Collection|TermTaxonomy[] $taxonomies
  */
 class Post extends Model
 {
@@ -181,5 +184,24 @@ class Post extends Model
     public function getPostType(): PostTypeEnum
     {
         return PostTypeEnum::POST();
+    }
+
+    /**
+     * Get related term taxonomies.
+     *
+     * @return BelongsToMany
+     */
+    public function taxonomies(): BelongsToMany
+    {
+        return $this
+            ->belongsToMany(
+                TermTaxonomy::class,
+                'term_relationships',
+                'object_id',
+                'term_taxonomy_id',
+                'ID',
+                'term_taxonomy_id'
+            )
+            ->withPivot(['term_order']);
     }
 }

@@ -1,13 +1,14 @@
 <?php
 
-namespace DuoTeam\Acorn\Database;
 
-use Exception;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+namespace DuoTeam\Acorn\Database\Support\Repositories;
+
+
+use DuoTeam\Acorn\Database\Interfaces\EloquentRepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
-abstract class Repository
+abstract class EloquentRepository implements EloquentRepositoryInterface
 {
     /**
      * Create model.
@@ -18,7 +19,7 @@ abstract class Repository
      */
     public function create(array $attributes): Model
     {
-        return $this->builder()->create($this->prepareAttributes($attributes));
+        return $this->builder()->create($attributes);
     }
 
     /**
@@ -84,39 +85,32 @@ abstract class Repository
      */
     public function delete(string $id): bool
     {
-        try {
-            return $this->get($id, [$this->model()->getKeyName()])->delete();
-        } catch (Exception $exception) {
-            return false;
-        }
+        return $this->builder()
+            ->where($this->model()->getKeyName(), '=', $id)
+            ->delete();
     }
 
     /**
-     * Get eloquent builder instance.
+     * Check if resource exists.
      *
-     * @return Builder
-     */
-    abstract protected function builder(): Builder;
-
-    /**
-     * Get model default attributes values.
+     * @param string $id
      *
-     * @return array
+     * @return bool
      */
-    protected function defaultAttributes(): array
+    public function exists(string $id): bool
     {
-        return [];
+        return $this->builder()
+            ->where($this->model()->getKeyName(), '=', $id)
+            ->exists();
     }
 
     /**
-     * Prepare attributes. Merge with defaults.
+     * Get used model instance.
      *
-     * @param array $attributes
-     *
-     * @return array
+     * @return Model
      */
-    protected function prepareAttributes(array $attributes): array
+    protected function model(): Model
     {
-        return array_merge($this->defaultAttributes(), $attributes);
+        return $this->builder()->getModel();
     }
 }

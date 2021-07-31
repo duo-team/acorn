@@ -4,7 +4,16 @@ namespace DuoTeam\Acorn\Database\Models\Taxonomy;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Collection;
 
+/**
+ * @property int $meta_id
+ * @property int $term_id
+ * @property int $meta_key
+ * @property int $meta_value
+ *
+ * @property Term $term
+ */
 class TermMeta extends Model
 {
     /**
@@ -46,6 +55,6 @@ class TermMeta extends Model
      */
     public function term(): BelongsTo
     {
-        return $this->belongsTo(Term::class, 'term_id', 'id');
+        return $this->belongsTo(Term::class, 'term_id', 'term_id');
     }
 }

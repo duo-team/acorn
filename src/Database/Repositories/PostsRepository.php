@@ -4,16 +4,16 @@ namespace DuoTeam\Acorn\Database\Repositories;
 
 use DuoTeam\Acorn\Database\Exceptions\PostInsertException;
 use DuoTeam\Acorn\Database\Models\Post\Post;
-use DuoTeam\Acorn\Database\Repository;
+use DuoTeam\Acorn\Database\Support\Repositories\EloquentRepository;
 use DuoTeam\Acorn\Enums\Post\PostCommentStatusEnum;
 use DuoTeam\Acorn\Enums\Post\PostPingStatusEnum;
 use DuoTeam\Acorn\Enums\Post\PostStatusEnum;
 use DuoTeam\Acorn\Enums\Post\PostTypeEnum;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-class PostsRepository extends Repository
+class PostsRepository extends EloquentRepository
 {
     /**
      * Create model.
@@ -24,7 +24,7 @@ class PostsRepository extends Repository
      */
     public function create(array $attributes): Model
     {
-        $modelId = wp_insert_post($this->prepareAttributes($attributes));
+        $modelId = wp_insert_post($attributes);
 
         if (is_wp_error($modelId)) {
             throw PostInsertException::byWpError($modelId);
@@ -50,7 +50,7 @@ class PostsRepository extends Repository
      *
      * @return Builder
      */
-    protected function builder(): Builder
+    public function builder(): Builder
     {
         return Post::query();
     }
@@ -61,22 +61,5 @@ class PostsRepository extends Repository
     protected function postType(): PostTypeEnum
     {
         return PostTypeEnum::POST();
-    }
-
-    /**
-     * Get model default attributes values.
-     *
-     * @return array
-     */
-    protected function defaultAttributes(): array
-    {
-        return [
-            'post_content' => '',
-            'post_title' => '',
-            'post_excerpt' => '',
-            'post_status' => PostStatusEnum::PRIVATE(),
-            'comment_status' => PostCommentStatusEnum::CLOSED(),
-            'ping_status' => PostPingStatusEnum::CLOSED(),
-        ];
     }
 }

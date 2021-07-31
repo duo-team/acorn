@@ -2,11 +2,20 @@
 
 namespace DuoTeam\Acorn\Database\Models\Taxonomy;
 
-use DuoTeam\Acorn\Support\Taxonomies\Taxonomy;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
 
+/**
+ * @property int $term_id
+ * @property string $name
+ * @property string $slug
+ * @property int $term_group
+ *
+ * @property Collection|TermMeta[] $meta
+ * @property TermTaxonomy $taxonomy
+ */
 class Term extends Model
 {
     /**
@@ -48,7 +57,7 @@ class Term extends Model
      */
     public function meta(): HasMany
     {
-        return $this->hasMany(TermMeta::class, 'term_id', 'id');
+        return $this->hasMany(TermMeta::class, 'term_id', 'term_id');
     }
 
     /**
@@ -58,6 +67,6 @@ class Term extends Model
      */
     public function taxonomy(): HasOne
     {
-        return $this->hasOne(Taxonomy::class, 'term_id', 'id');
+        return $this->hasOne(TermTaxonomy::class, 'term_id', 'term_id');
     }
 }
