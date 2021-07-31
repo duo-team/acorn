@@ -9,8 +9,6 @@ use DuoTeam\Acorn\Database\Support\Repositories\EloquentRepository;
 use DuoTeam\Acorn\Enums\Taxonomy\TaxonomyEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use RuntimeException;
 use Webmozart\Assert\Assert;
 
 class TermTaxonomyRepository extends EloquentRepository
@@ -19,6 +17,7 @@ class TermTaxonomyRepository extends EloquentRepository
      * Create term from name.
      *
      * @param string $termName
+     *
      * @return Model
      */
     public function createFromName(string $termName): Model
@@ -36,11 +35,9 @@ class TermTaxonomyRepository extends EloquentRepository
     public function create(array $attributes): Model
     {
         Assert::keyExists($attributes, 'term');
-        $result = wp_insert_term(
-            $attributes['term'],
-            $this->getTaxonomy()->getValue(),
-            $attributes
-        );
+
+        $taxonomy = $this->getTaxonomy()->getValue();
+        $result = wp_insert_term($attributes['term'], $taxonomy, $attributes);
 
         if (is_wp_error($result)) {
             throw ModelInsertException::fromWordPressError($result);
@@ -83,6 +80,7 @@ class TermTaxonomyRepository extends EloquentRepository
      * @param array $columns
      *
      * @return Model
+     * @throws \Throwable
      */
     public function findByColumn(string $column, string $value, array $columns = ['*']): ?Model
     {
