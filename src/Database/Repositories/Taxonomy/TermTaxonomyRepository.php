@@ -35,7 +35,7 @@ class TermTaxonomyRepository extends EloquentRepository
         Assert::keyExists($attributes, 'term');
         $result = wp_insert_term(
             $attributes['term'],
-            $this->getTaxonomy(),
+            $this->getTaxonomy()->getValue(),
             $attributes
         );
 
