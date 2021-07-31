@@ -68,6 +68,13 @@ class Post extends Model
     const UPDATED_AT_GMT = 'post_modified_gmt';
 
     /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'posts';
+
+    /**
      * The primary key for the model.
      *
      * @var string
