@@ -13,11 +13,17 @@ use Illuminate\Database\Eloquent\Model;
 class PostsRepository extends EloquentRepository
 {
     /**
+     * Post ID for does not exists post.
+     */
+    protected const NO_EXISTS_POST_ID = 0;
+
+    /**
      * Create model.
      *
      * @param array $attributes
      *
      * @return Model
+     * @throws \Throwable
      */
     public function create(array $attributes): Model
     {
@@ -52,6 +58,18 @@ class PostsRepository extends EloquentRepository
     public function builder(): Builder
     {
         return Post::query();
+    }
+
+    /**
+     * Check if post exists by title.
+     *
+     * @param string $title
+     *
+     * @return bool
+     */
+    public function existsByTitle(string $title): bool
+    {
+        return post_exists($title) > self::NO_EXISTS_POST_ID;
     }
 
     /**
