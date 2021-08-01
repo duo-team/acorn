@@ -20,7 +20,7 @@ class Field
     /**
      * Field owner ID.
      *
-     * @var int
+     * @var string
      */
     private $ownerId;
 
@@ -34,13 +34,13 @@ class Field
     /**
      * @param string $selector
      * @param $value
-     * @param int $ownerId
+     * @param string $ownerId
      * @param bool $formatted
      */
     public function __construct(
         string $selector,
         $value,
-        int $ownerId,
+        string $ownerId,
         bool $formatted
     )
     {
@@ -73,9 +73,9 @@ class Field
     /**
      * Get owner ID.
      *
-     * @return int
+     * @return string
      */
-    public function getOwnerId(): int
+    public function getOwnerId(): string
     {
         return $this->ownerId;
     }
