@@ -51,6 +51,18 @@ class PostsRepository extends EloquentRepository
     }
 
     /**
+     * Get post by title.
+     *
+     * @param string $title
+     *
+     * @return Model
+     */
+    public function getByTitle(string $title): Model
+    {
+        return $this->getByColumn('post_title', $title);
+    }
+
+    /**
      * Get eloquent builder instance.
      *
      * @return Builder
