@@ -158,6 +158,16 @@ abstract class EloquentRepository implements EloquentRepositoryInterface
         return $this->builder()->where($attributes)->exists();
     }
 
+    /**
+     * Get random model.
+     *
+     * @return Model|null
+     */
+    public function random(): ?Model
+    {
+        return $this->builder()->inRandomOrder()->first();
+    }
+
 
     /**
      * Get used model instance.

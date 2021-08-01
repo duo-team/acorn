@@ -46,4 +46,11 @@ interface EloquentRepositoryInterface extends RepositoryInterface
      * @return bool
      */
     public function existsByAttributes(array $attributes): bool;
+
+    /**
+     * Get random model.
+     *
+     * @return Model|null
+     */
+    public function random(): ?Model;
 }
