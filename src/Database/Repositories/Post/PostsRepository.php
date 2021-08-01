@@ -28,7 +28,7 @@ class PostsRepository extends EloquentRepository
     public function create(array $attributes): Model
     {
         $modelId = wp_insert_post(array_merge($attributes, [
-            'post_type' => $this->getPostType()
+            'post_type' => $this->getPostType()->getValue()
         ]));
 
         if (is_wp_error($modelId)) {
