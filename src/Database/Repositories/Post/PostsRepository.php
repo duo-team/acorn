@@ -13,11 +13,6 @@ use Illuminate\Database\Eloquent\Model;
 class PostsRepository extends EloquentRepository
 {
     /**
-     * Post ID for does not exists post.
-     */
-    protected const NO_EXISTS_POST_ID = 0;
-
-    /**
      * Create model.
      *
      * @param array $attributes
