@@ -82,7 +82,7 @@ class PostsRepository extends EloquentRepository
     public function existsByTitle(string $title): bool
     {
         return $this->builder()
-            ->where('post_title', 'like', sprintf('%%s%', $title))
+            ->where('post_title', 'like', sprintf('%%%s%%', $title))
             ->where('post_type', '=', $this->getPostType()->getValue())
             ->exists();
     }
