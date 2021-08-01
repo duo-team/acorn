@@ -37,4 +37,13 @@ interface EloquentRepositoryInterface extends RepositoryInterface
      * @return Model
      */
     public function findByColumn(string $column, string $value, array $columns = ['*']): ?Model;
+
+    /**
+     * Check if post exists by attributes.
+     *
+     * @param array $attributes
+     *
+     * @return bool
+     */
+    public function existsByAttributes(array $attributes): bool;
 }

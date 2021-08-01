@@ -147,6 +147,19 @@ abstract class EloquentRepository implements EloquentRepositoryInterface
     }
 
     /**
+     * Check if post exists by attributes.
+     *
+     * @param array $attributes
+     *
+     * @return bool
+     */
+    public function existsByAttributes(array $attributes): bool
+    {
+        return $this->builder()->where($attributes)->exists();
+    }
+
+
+    /**
      * Get used model instance.
      *
      * @return Model
