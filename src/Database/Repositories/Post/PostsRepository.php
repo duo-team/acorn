@@ -46,7 +46,7 @@ class PostsRepository extends EloquentRepository
     public function all(): Collection
     {
         return $this->builder()
-            ->where('post_type', '=', $this->getPostType())
+            ->where('post_type', '=', $this->getPostType()->getValue())
             ->get();
     }
 
@@ -69,7 +69,10 @@ class PostsRepository extends EloquentRepository
      */
     public function existsByTitle(string $title): bool
     {
-        return post_exists($title) > self::NO_EXISTS_POST_ID;
+        return $this->builder()
+            ->where('post_title', 'like', sprintf('%%s%', $title))
+            ->where('post_type', '=', $this->getPostType()->getValue())
+            ->exists();
     }
 
     /**
