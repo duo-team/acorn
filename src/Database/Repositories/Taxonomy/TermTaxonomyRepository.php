@@ -10,6 +10,7 @@ use DuoTeam\Acorn\Enums\Taxonomy\TaxonomyEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Webmozart\Assert\Assert;
+use WP_Term;
 
 class TermTaxonomyRepository extends EloquentRepository
 {
@@ -90,11 +91,11 @@ class TermTaxonomyRepository extends EloquentRepository
             throw ModelRetrieveException::fromWordPressError($term);
         }
 
-        if (!$term) {
+        if (!$term || ! $term instanceof WP_Term) {
             return null;
         }
 
-        return $term;
+        return $this->get($term->term_taxonomy_id);
     }
 
     /**
