@@ -22,7 +22,7 @@ class FieldsRepository
     }
 
     /**
-     * Update field.
+     * Update field.x
      *
      * @param string $selector
      * @param $value
@@ -40,12 +40,12 @@ class FieldsRepository
     /**
      * Update many fields.
      *
-     * @param string $fields
+     * @param array $fields
      * @param string|null $ownerId
      *
      * @return Collection
      */
-    public function updateMany(string $fields, ?string $ownerId = null): Collection
+    public function updateMany(array $fields, ?string $ownerId = null): Collection
     {
         return collect($fields)->map(function ($value, string $selector) use ($ownerId) {
             return $this->update($selector, $value, $ownerId);
