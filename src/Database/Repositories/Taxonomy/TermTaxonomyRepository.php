@@ -70,7 +70,8 @@ class TermTaxonomyRepository extends EloquentRepository
      */
     public function builder(): Builder
     {
-        return TermTaxonomy::query();
+        return TermTaxonomy::query()
+            ->where('taxonomy', '=', $this->getTaxonomy()->getValue());
     }
 
     /**

@@ -165,28 +165,6 @@ class Post extends Model
     }
 
     /**
-     * Get a new query builder that doesn't have any global scopes or eager loading.
-     * Return query for current post type.
-     *
-     * @return Builder|static
-     */
-    public function newModelQuery()
-    {
-        return parent::newModelQuery()
-            ->where('post_type', '=', $this->getPostType()->getValue());
-    }
-
-    /**
-     * Get post type.
-     *
-     * @return PostTypeEnum
-     */
-    public function getPostType(): PostTypeEnum
-    {
-        return PostTypeEnum::POST();
-    }
-
-    /**
      * Get related term taxonomies.
      *
      * @return BelongsToMany

@@ -64,7 +64,8 @@ class PostsRepository extends EloquentRepository
      */
     public function builder(): Builder
     {
-        return Post::query();
+        return Post::query()
+            ->where('post_type', '=', $this->getPostType()->getValue());
     }
 
     /**
