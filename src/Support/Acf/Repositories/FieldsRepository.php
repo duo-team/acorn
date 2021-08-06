@@ -30,11 +30,11 @@ class FieldsRepository
      *
      * @return Field
      */
-    public function update(string $selector, $value, ?string $ownerId = null): Field
+    public function updateField(string $selector, $value, ?string $ownerId = null): Field
     {
         update_field($selector, $value, $ownerId);
 
-        return $this->get($selector, $ownerId);
+        return $this->getField($selector, $ownerId);
     }
 
     /**
@@ -45,10 +45,10 @@ class FieldsRepository
      *
      * @return Collection
      */
-    public function updateMany(array $fields, ?string $ownerId = null): Collection
+    public function updateManyFields(array $fields, ?string $ownerId = null): Collection
     {
         return collect($fields)->map(function ($value, string $selector) use ($ownerId) {
-            return $this->update($selector, $value, $ownerId);
+            return $this->updateField($selector, $value, $ownerId);
         });
     }
 
@@ -61,12 +61,28 @@ class FieldsRepository
      *
      * @return Field
      */
-    public function get(string $selector, ?string $ownerId = null, bool $formatted = true): Field
+    public function getField(string $selector, ?string $ownerId = null, bool $formatted = true): Field
     {
         $value = get_field($selector, $ownerId, $formatted);
         $this->configureFieldFactory($selector, $ownerId, $formatted)->setValue($value);
 
         return $this->fieldFactory->create();
+    }
+
+    /**
+     * @param string $selector
+     * @param int $row
+     * @param array $value
+     * @param string|null $ownerId
+     */
+    public function updateRow(string $selector, int $row, array $value, ?string $ownerId = null)
+    {
+        update_row($selector, $row, $value, $ownerId);
+    }
+
+    public function updateSubRow(array $selector, $value, ?string $ownerId = null)
+    {
+        update_sub_field($selector, $value, $ownerId);
     }
 
     /**

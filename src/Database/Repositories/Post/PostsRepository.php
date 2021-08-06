@@ -79,7 +79,6 @@ class PostsRepository extends EloquentRepository
     {
         return $this->builder()
             ->where('post_title', 'like', sprintf('%%%s%%', $title))
-            ->where('post_type', '=', $this->getPostType()->getValue())
             ->exists();
     }
 
