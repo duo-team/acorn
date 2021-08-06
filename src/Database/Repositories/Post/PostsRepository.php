@@ -41,7 +41,6 @@ class PostsRepository extends EloquentRepository
     public function all(): Collection
     {
         return $this->builder()
-            ->where('post_type', '=', $this->getPostType()->getValue())
             ->get();
     }
 
