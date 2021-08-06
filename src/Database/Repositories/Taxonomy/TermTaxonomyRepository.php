@@ -92,7 +92,7 @@ class TermTaxonomyRepository extends EloquentRepository
             throw ModelRetrieveException::fromWordPressError($term);
         }
 
-        if (!$term || ! $term instanceof WP_Term) {
+        if (!$term || !$term instanceof WP_Term) {
             return null;
         }
 
@@ -100,7 +100,8 @@ class TermTaxonomyRepository extends EloquentRepository
     }
 
     /**
-     * Get
+     * Get term taxonomy by name.
+     *
      * @param string $name
      *
      * @return Model
@@ -108,6 +109,17 @@ class TermTaxonomyRepository extends EloquentRepository
     public function getByName(string $name): Model
     {
         return $this->getByColumn('name', $name);
+    }
+
+    /**
+     * Get term taxonomy by slug.
+     *
+     * @param string $slug
+     * @return Model
+     */
+    public function getBySlug(string $slug): Model
+    {
+        return $this->getByColumn('slug', $slug);
     }
 
     /**
