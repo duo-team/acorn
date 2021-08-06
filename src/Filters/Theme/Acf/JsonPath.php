@@ -3,18 +3,22 @@
 namespace DuoTeam\Acorn\Filters\Theme\Acf;
 
 use DuoTeam\Acorn\Support\Filter;
+use Illuminate\Config\Repository as Configuration;
+use function Roots\resource_path;
 
-class JsonPath extends Filter
+abstract class JsonPath extends Filter
 {
     /**
-     * Modify ACF JSON paths.
-     *
-     * @return void
+     * @var Configuration
      */
-    public function handle(): void
+    private $config;
+
+    /**
+     * @param Configuration $config
+     */
+    public function __construct(Configuration $config)
     {
-        add_filter('acf/settings/save_json', [$this, 'setSavePath']);
-        add_filter('acf/settings/load_json', [$this, 'setLoadPath']);
+        $this->config = $config;
     }
 
     /**
@@ -22,7 +26,7 @@ class JsonPath extends Filter
      *
      * @return array
      */
-    public function setLoadPath(): array
+    public function getLoadPath(): array
     {
         return [
             $this->getJsonPath(),
@@ -34,7 +38,7 @@ class JsonPath extends Filter
      *
      * @return string
      */
-    public function setSavePath(): string
+    public function getSavePath(): string
     {
         return $this->getJsonPath();
     }
@@ -44,8 +48,8 @@ class JsonPath extends Filter
      *
      * @return string
      */
-    protected function getJsonPath(): string
+    public function getJsonPath(): string
     {
-        return config('acf.path', resource_path('acf'));
+        return $this->config->get('acf.path', resource_path('acf'));
     }
 }
