@@ -100,6 +100,23 @@ class TermTaxonomyRepository extends EloquentRepository
     }
 
     /**
+     * Get model with id or fail.
+     *
+     * @param string $id
+     * @param string[] $columns
+     *
+     * @return Model
+     */
+    public function get(string $id, array $columns = ['*']): Model
+    {
+        return $this->builder()
+            ->select($columns)
+            ->where('term_taxonomy_id', '=', $id)
+            ->firstOrFail($columns);
+    }
+
+
+    /**
      * Get term taxonomy by name.
      *
      * @param string $name
