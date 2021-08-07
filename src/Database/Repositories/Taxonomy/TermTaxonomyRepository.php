@@ -59,7 +59,7 @@ class TermTaxonomyRepository extends EloquentRepository
      */
     public function exists(string $id): bool
     {
-        return !empty(term_exists($id, $this->getTaxonomy()->getValue()));
+        return !empty(term_exists((int) $id, $this->getTaxonomy()->getValue()));
     }
 
 
