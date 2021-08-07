@@ -140,6 +140,15 @@ class TermTaxonomyRepository extends EloquentRepository
     }
 
     /**
+     * @param string $termId
+     * @return Model
+     */
+    public function getByTermId(string $termId): Model
+    {
+        return $this->getByColumn('term_id', $termId);
+    }
+
+    /**
      * Get taxonomy.
      *
      * @return TaxonomyEnum
