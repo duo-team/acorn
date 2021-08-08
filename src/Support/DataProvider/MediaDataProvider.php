@@ -7,12 +7,12 @@ use Webmozart\Assert\Assert;
 class MediaDataProvider
 {
     /**
-     * @param int $imageId
+     * @param int $attachmentId
      * @return string
      */
-    public function getAttachmentUrl(int $imageId): string
+    public function getAttachmentUrl(int $attachmentId): string
     {
-        $attachmentUrl = wp_get_attachment_url($imageId);
+        $attachmentUrl = wp_get_attachment_url($attachmentId);
         Assert::string($attachmentUrl);
 
         return $attachmentUrl;
