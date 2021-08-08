@@ -2,6 +2,7 @@
 
 namespace DuoTeam\Acorn\Support\Acf\Repositories;
 
+use DuoTeam\Acorn\Database\Models\Taxonomy\TermTaxonomy;
 use DuoTeam\Acorn\Support\Acf\Factories\FieldFactory;
 use DuoTeam\Acorn\Support\Acf\Models\Field;
 use Illuminate\Support\Collection;
@@ -71,18 +72,17 @@ class FieldsRepository
 
     /**
      * @param string $selector
-     * @param int $row
-     * @param array $value
-     * @param string|null $ownerId
+     * @param TermTaxonomy $taxonomy
+     * @param bool $formatted
+     * @return Field
      */
-    public function updateRow(string $selector, int $row, array $value, ?string $ownerId = null)
+    public function getTermTaxonomyField(string $selector, TermTaxonomy $taxonomy, bool $formatted = true): Field
     {
-        update_row($selector, $row, $value, $ownerId);
-    }
-
-    public function updateSubRow(array $selector, $value, ?string $ownerId = null)
-    {
-        update_sub_field($selector, $value, $ownerId);
+        return $this->getField(
+            $selector,
+            $this->composeOwnerIdFromTaxonomy($taxonomy),
+            $formatted
+        );
     }
 
     /**
@@ -100,5 +100,14 @@ class FieldsRepository
             ->forOwnerId($ownerId)
             ->withSelector($selector)
             ->markFormatted($formatted);
+    }
+
+    /**
+     * @param TermTaxonomy $taxonomy
+     * @return string
+     */
+    protected function composeOwnerIdFromTaxonomy(TermTaxonomy $taxonomy): string
+    {
+        return sprintf('%s_%s', $taxonomy->taxonomy, $taxonomy->term_id);
     }
 }
