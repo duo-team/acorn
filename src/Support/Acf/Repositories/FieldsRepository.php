@@ -54,6 +54,27 @@ class FieldsRepository
     }
 
     /**
+     * @param string $selector
+     * @param $value
+     * @param TermTaxonomy $taxonomy
+     * @return Field
+     */
+    public function updateTermTaxonomyField(string $selector, $value, TermTaxonomy $taxonomy): Field
+    {
+        return $this->updateField($selector, $value, $this->composeOwnerIdFromTaxonomy($taxonomy));
+    }
+
+    /**
+     * @param array $fields
+     * @param TermTaxonomy $taxonomy
+     * @return Collection
+     */
+    public function updateManyTermTaxonomyFields(array $fields, TermTaxonomy $taxonomy): Collection
+    {
+        return $this->updateManyFields($fields, $this->composeOwnerIdFromTaxonomy($taxonomy));
+    }
+
+    /**
      * Get field from database.
      *
      * @param string $selector
