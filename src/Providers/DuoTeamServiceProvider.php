@@ -38,17 +38,17 @@ class DuoTeamServiceProvider extends AggregateServiceProvider
     protected function publish(): void
     {
         $this->publishes([
-            sprintf('%s/config/acf.php', $this->packagePath()) => config_path('acf.php'),
-            sprintf('%s/config/filters.php', $this->packagePath()) => config_path('filters.php'),
-            sprintf('%s/config/database.php', $this->packagePath()) => config_path('database.php'),
-            sprintf('%s/config/queue.php', $this->packagePath()) => config_path('queue.php'),
-            sprintf('%s/config/post_types.php', $this->packagePath()) => config_path('post_types.php'),
-            sprintf('%s/config/taxonomies.php', $this->packagePath()) => config_path('taxonomies.php'),
+            //sprintf('%s/config/acf.php', $this->packagePath()) => config_path('acf.php'),
+//             sprintf('%s/config/filters.php', $this->packagePath()) => config_path('filters.php'),
+//             sprintf('%s/config/database.php', $this->packagePath()) => config_path('database.php'),
+//             sprintf('%s/config/queue.php', $this->packagePath()) => config_path('queue.php'),
+//             sprintf('%s/config/post_types.php', $this->packagePath()) => config_path('post_types.php'),
+//             sprintf('%s/config/taxonomies.php', $this->packagePath()) => config_path('taxonomies.php'),
         ], 'duo-team-config');
 
-        $this->publishes([
-            sprintf('%s/resources/acf', $this->packagePath()) => resource_path('acf'),
-        ], 'duo-team-resources');
+//         $this->publishes([
+//             sprintf('%s/resources/acf', $this->packagePath()) => resource_path('acf'),
+//         ], 'duo-team-resources');
     }
 
     /**
